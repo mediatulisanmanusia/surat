@@ -1,1 +1,379 @@
-.
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rincian Pesanan Interaktif</title>
+    <!-- Library untuk export ke PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 10px; 
+            background-color: #f4f7f6; 
+            color: #333; 
+        }
+        .main-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .container { 
+            background: #fff; 
+            padding: 15px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+        }
+        h2 { 
+            text-align: center; 
+            color: #2c3e50; 
+            border-bottom: 2px solid #3498db; 
+            padding-bottom: 10px; 
+            margin-bottom: 15px; 
+            font-size: 20px;
+        }
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            min-width: 320px;
+        }
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 8px 5px; 
+            text-align: left; 
+            font-size: 14px;
+        }
+        th { 
+            background-color: #2980b9; 
+            color: white; 
+            font-size: 13px;
+            text-align: center;
+        }
+        input[type=number], input[type=text] { 
+            width: 100%; 
+            padding: 6px; 
+            box-sizing: border-box; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 13px;
+            min-width: 50px;
+        }
+        input[type=number]:focus, input[type=text]:focus { 
+            border-color: #3498db; 
+            outline: none; 
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); 
+        }
+        .total-row { 
+            font-weight: bold; 
+            background-color: #ecf0f1; 
+            font-size: 14px; 
+        }
+        .text-right { text-align: right; }
+        .currency { white-space: nowrap; }
+        .currency::before { 
+            content: "Rp "; 
+            color: #555; 
+            font-size: 0.9em; 
+            margin-right: 2px; 
+        }
+        .total-row .currency::before { 
+            color: #2c3e50; 
+            font-weight: bold; 
+        }
+        .highlight { color: #e74c3c; font-weight: bold; }
+        
+        /* Tombol Download PDF */
+        .btn-pdf {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-pdf:active {
+            background-color: #c0392b;
+            transform: translateY(2px);
+        }
+
+        /* Hilangkan elemen saat di-print ke PDF */
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: #fff; margin: 0; }
+            .container { box-shadow: none; padding: 0; }
+            input { border: 1px solid #eee; }
+        }
+
+        /* Khusus untuk tampilan HP agar muat dan sejajar */
+        @media (max-width: 480px) {
+            body { margin: 5px; }
+            .container { padding: 10px; }
+            th, td { padding: 6px 3px; font-size: 12px; }
+            th { font-size: 11px; }
+            input[type=number], input[type=text] { padding: 5px 2px; font-size: 12px; }
+            .currency::before { font-size: 0.8em; }
+            .col-nama { width: 30%; }
+            .col-harga { width: 25%; }
+            .col-qty { width: 15%; }
+            .col-total { width: 30%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <button class="btn-pdf no-print" onclick="unduhPDF()">📥 Unduh sebagai PDF</button>
+        
+        <div id="area-cetak">
+            <div class="container">
+                <h2>Rincian Pesanan</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-nama">Nama Barang</th>
+                                <th class="col-harga">Harga (Rp)</th>
+                                <th class="col-qty">Jumlah</th>
+                                <th class="col-total">Total (Rp)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <tr>
+                                <td><input type="text" class="name-input" value="Amox"></td>
+                                <td><input type="number" class="price-input" value="1040" min="0"></td>
+                                <td><input type="number" class="qty-input" value="3" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Para"></td>
+                                <td><input type="number" class="price-input" value="300" min="0"></td>
+                                <td><input type="number" class="qty-input" value="1" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Ambrox"></td>
+                                <td><input type="number" class="price-input" value="25000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="1" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Amplo"></td>
+                                <td><input type="number" class="price-input" value="23000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="5" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Asam"></td>
+                                <td><input type="number" class="price-input" value="5000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="5" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Vit"></td>
+                                <td><input type="number" class="price-input" value="4000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="25" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Sirup"></td>
+                                <td><input type="number" class="price-input" value="5200" min="0"></td>
+                                <td><input type="number" class="qty-input" value="10" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Cotrim"></td>
+                                <td><input type="number" class="price-input" value="1040" min="0"></td>
+                                <td><input type="number" class="qty-input" value="1" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Para"></td>
+                                <td><input type="number" class="price-input" value="3500" min="0"></td>
+                                <td><input type="number" class="qty-input" value="10" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Promag"></td>
+                                <td><input type="number" class="price-input" value="25000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="10" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Ibu"></td>
+                                <td><input type="number" class="price-input" value="0" min="0"></td>
+                                <td><input type="number" class="qty-input" value="10" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Ctm"></td>
+                                <td><input type="number" class="price-input" value="23000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="1" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Bedak 22"></td>
+                                <td><input type="number" class="price-input" value="5000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="10" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Ctm"></td>
+                                <td><input type="number" class="price-input" value="5000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="10" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Salep"></td>
+                                <td><input type="number" class="price-input" value="5000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="24" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Tetes mata telinga"></td>
+                                <td><input type="number" class="price-input" value="20000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="10" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Dimen hidrinat"></td>
+                                <td><input type="number" class="price-input" value="25000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="1" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Oralit"></td>
+                                <td><input type="number" class="price-input" value="100000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="1" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="name-input" value="Paralit"></td>
+                                <td><input type="number" class="price-input" value="500000" min="0"></td>
+                                <td><input type="number" class="qty-input" value="1" min="0"></td>
+                                <td class="text-right row-total currency">0</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td colspan="3" class="text-right">Total Keseluruhan:</td>
+                                <td id="grand-total" class="text-right currency highlight">0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID').format(number);
+        }
+
+        function saveData() {
+            const dataToSave = [];
+            const rows = document.querySelectorAll('#table-body tr');
+            
+            rows.forEach(row => {
+                const nameInput = row.querySelector('.name-input');
+                const priceInput = row.querySelector('.price-input');
+                const qtyInput = row.querySelector('.qty-input');
+                dataToSave.push({
+                    name: nameInput.value,
+                    price: priceInput.value,
+                    qty: qtyInput.value
+                });
+            });
+            localStorage.setItem('pesananDataAutoSaveV3', JSON.stringify(dataToSave));
+        }
+
+        function loadData() {
+            const savedData = localStorage.getItem('pesananDataAutoSaveV3');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const rows = document.querySelectorAll('#table-body tr');
+                
+                rows.forEach((row, index) => {
+                    if (data[index]) {
+                        if (data[index].name !== undefined) {
+                            row.querySelector('.name-input').value = data[index].name;
+                        }
+                        row.querySelector('.price-input').value = data[index].price;
+                        row.querySelector('.qty-input').value = data[index].qty;
+                    }
+                });
+            }
+        }
+
+        function calculateTotals() {
+            let grandTotal = 0;
+            const rows = document.querySelectorAll('#table-body tr');
+            
+            rows.forEach(row => {
+                const priceInput = row.querySelector('.price-input');
+                const qtyInput = row.querySelector('.qty-input');
+                const totalCell = row.querySelector('.row-total');
+                
+                const price = parseFloat(priceInput.value) || 0;
+                const qty = parseFloat(qtyInput.value) || 0;
+                
+                const total = price * qty;
+                totalCell.textContent = formatRupiah(total);
+                
+                grandTotal += total;
+            });
+            
+            document.getElementById('grand-total').textContent = formatRupiah(grandTotal);
+            saveData();
+        }
+
+        function unduhPDF() {
+            document.querySelectorAll('input').forEach(input => {
+                input.setAttribute('value', input.value);
+            });
+
+            const elemenCetak = document.getElementById('area-cetak');
+            const opsiPDF = {
+                margin:       10,
+                filename:     'Rincian_Pesanan.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            const tombol = document.querySelector('.btn-pdf');
+            const teksLama = tombol.innerText;
+            tombol.innerText = "⏳ Memproses PDF...";
+            
+            html2pdf().set(opsiPDF).from(elemenCetak).save().then(() => {
+                tombol.innerText = teksLama;
+            });
+        }
+
+        document.querySelectorAll('.price-input, .qty-input').forEach(input => {
+            input.addEventListener('input', calculateTotals);
+        });
+        document.querySelectorAll('.name-input').forEach(input => {
+            input.addEventListener('input', saveData);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            calculateTotals();
+        });
+    </script>
+</body>
+</html>
+
