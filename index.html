@@ -9,20 +9,20 @@
 
 <style>
   :root {
-    /* Latar belakang dengan sedikit gradien agar efek kaca terlihat */
-    --bg-body: linear-gradient(135deg, #e2e8f0, #f8fafc); 
-    --bg-paper: rgba(255, 255, 255, 0.85);
-    --paper-border: rgba(255, 255, 255, 0.6);
+    /* Latar belakang biru gelap menyesuaikan warna biru pada logo MTM */
+    --bg-body: linear-gradient(135deg, #002147, #001229); 
+    --bg-paper: rgba(255, 255, 255, 0.9); /* Sedikit lebih pekat agar teks surat jelas dibaca */
+    --paper-border: rgba(255, 255, 255, 0.4);
     --text-main: #000000;
     --border-color: #000000;
-    --kop-line: #002147; /* Warna biru gelap mirip di gambar untuk mode terang */
-    --glass-nav-bg: rgba(255, 255, 255, 0.6);
+    --kop-line: #002147; 
+    --glass-nav-bg: rgba(255, 255, 255, 0.75);
     --glass-nav-border: rgba(255, 255, 255, 0.4);
-    --glass-shadow: rgba(0, 0, 0, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
   }
 
   body.dark-mode {
-    /* Latar belakang coklat gelap/hitam keabuan */
+    /* Latar belakang coklat gelap/hitam keabuan (#1B1B1B) */
     --bg-body: linear-gradient(135deg, #1B1B1B, #2a2a2a); 
     --bg-paper: rgba(40, 40, 40, 0.75);
     --paper-border: rgba(255, 255, 255, 0.1);
@@ -46,7 +46,7 @@
     min-height: 100vh;
   }
 
-  /* Efek Gelembung (Glassmorphism Nav) */
+  /* Efek Gelembung (Glassmorphism Nav) - Tampilan Desktop/Default */
   .bubble-nav {
     position: fixed;
     top: 20px;
@@ -114,7 +114,7 @@
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 90px; /* Sesuaikan ukuran logo */
+    width: 90px;
   }
   .kop-logo img {
     width: 100%;
@@ -123,13 +123,13 @@
   .kop-text {
     text-align: center;
     width: 100%;
-    padding: 0 100px; /* Mencegah teks menabrak logo */
+    padding: 0 100px; 
   }
   .kop-text h1 {
     margin: 0;
     font-size: 18pt;
     font-weight: bold;
-    font-family: Arial, sans-serif; /* Sesuai standar desain logo modern */
+    font-family: Arial, sans-serif;
     color: var(--text-main);
   }
   .kop-text h2 {
@@ -168,7 +168,7 @@
   
   /* Tanda Tangan Image */
   .ttd-img {
-    height: 70px; /* Sesuaikan ukuran ttd agar proporsional */
+    height: 70px;
     display: block;
     margin: 5px 0;
   }
@@ -199,18 +199,34 @@
     text-align: center;
     font-size: 10px;
     font-family: sans-serif;
-    color: gray;
+    color: #cccccc; /* Diubah menjadi abu-abu terang agar jelas di latar biru gelap */
     padding: 20px;
     margin-bottom: 20px;
   }
 
-  /* Responsif untuk Smartphone */
+  /* Responsif khusus untuk Smartphone */
   @media (max-width: 768px) {
+    /* Penyesuaian Gelembung Navigasi HP */
+    .bubble-nav {
+      width: 85%;
+      padding: 6px 15px; 
+      top: 15px;
+    }
+    .bubble-nav img {
+      height: 25px; 
+    }
+    .theme-switch {
+      font-size: 16px; 
+      padding: 2px;
+    }
+
+    /* Penyesuaian Kertas di HP */
     .kertas {
-      margin: 90px 15px 20px 15px;
+      margin: 80px 15px 20px 15px;
       padding: 20px;
       border-radius: 15px;
     }
+    
     /* Susun kop vertikal di layar kecil */
     .kop-surat {
       flex-direction: column;
@@ -228,7 +244,7 @@
     .kop-text h2 { font-size: 11pt; }
     
     .ttd-kanan { width: 100%; text-align: right; }
-    .ttd-img { margin-left: auto; } /* Dorong gambar ttd ke kanan di mobile */
+    .ttd-img { margin-left: auto; }
     .page-break { border-top: none; }
     body { font-size: 11pt; }
   }
@@ -396,7 +412,7 @@
       logoNav.src = 'logopt3.webp'; // Logo terang untuk latar gelap
       btnTheme.textContent = '☀️';
     } else {
-      logoNav.src = 'logopt2.webp'; // Logo gelap untuk latar terang
+      logoNav.src = 'logopt2.webp'; // Logo gelap untuk latar terang (biru)
       btnTheme.textContent = '🌙';
     }
   });
