@@ -1,379 +1,406 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rincian Pesanan Interaktif</title>
-    <!-- Library untuk export ke PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            margin: 10px; 
-            background-color: #f4f7f6; 
-            color: #333; 
-        }
-        .main-wrapper {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .container { 
-            background: #fff; 
-            padding: 15px; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
-        }
-        h2 { 
-            text-align: center; 
-            color: #2c3e50; 
-            border-bottom: 2px solid #3498db; 
-            padding-bottom: 10px; 
-            margin-bottom: 15px; 
-            font-size: 20px;
-        }
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            min-width: 320px;
-        }
-        th, td { 
-            border: 1px solid #ddd; 
-            padding: 8px 5px; 
-            text-align: left; 
-            font-size: 14px;
-        }
-        th { 
-            background-color: #2980b9; 
-            color: white; 
-            font-size: 13px;
-            text-align: center;
-        }
-        input[type=number], input[type=text] { 
-            width: 100%; 
-            padding: 6px; 
-            box-sizing: border-box; 
-            border: 1px solid #ccc; 
-            border-radius: 4px; 
-            font-size: 13px;
-            min-width: 50px;
-        }
-        input[type=number]:focus, input[type=text]:focus { 
-            border-color: #3498db; 
-            outline: none; 
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); 
-        }
-        .total-row { 
-            font-weight: bold; 
-            background-color: #ecf0f1; 
-            font-size: 14px; 
-        }
-        .text-right { text-align: right; }
-        .currency { white-space: nowrap; }
-        .currency::before { 
-            content: "Rp "; 
-            color: #555; 
-            font-size: 0.9em; 
-            margin-right: 2px; 
-        }
-        .total-row .currency::before { 
-            color: #2c3e50; 
-            font-weight: bold; 
-        }
-        .highlight { color: #e74c3c; font-weight: bold; }
-        
-        /* Tombol Download PDF */
-        .btn-pdf {
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-pdf:active {
-            background-color: #c0392b;
-            transform: translateY(2px);
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surat Keterangan Mitra PT MEDIA TULISAN MANUSIA</title>
+<!-- Favicon -->
+<link rel="icon" type="image/webp" href="logopt1.webp">
 
-        /* Hilangkan elemen saat di-print ke PDF */
-        @media print {
-            .no-print { display: none !important; }
-            body { background-color: #fff; margin: 0; }
-            .container { box-shadow: none; padding: 0; }
-            input { border: 1px solid #eee; }
-        }
+<style>
+  :root {
+    /* Latar belakang dengan sedikit gradien agar efek kaca terlihat */
+    --bg-body: linear-gradient(135deg, #e2e8f0, #f8fafc); 
+    --bg-paper: rgba(255, 255, 255, 0.85);
+    --paper-border: rgba(255, 255, 255, 0.6);
+    --text-main: #000000;
+    --border-color: #000000;
+    --kop-line: #002147; /* Warna biru gelap mirip di gambar untuk mode terang */
+    --glass-nav-bg: rgba(255, 255, 255, 0.6);
+    --glass-nav-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+  }
 
-        /* Khusus untuk tampilan HP agar muat dan sejajar */
-        @media (max-width: 480px) {
-            body { margin: 5px; }
-            .container { padding: 10px; }
-            th, td { padding: 6px 3px; font-size: 12px; }
-            th { font-size: 11px; }
-            input[type=number], input[type=text] { padding: 5px 2px; font-size: 12px; }
-            .currency::before { font-size: 0.8em; }
-            .col-nama { width: 30%; }
-            .col-harga { width: 25%; }
-            .col-qty { width: 15%; }
-            .col-total { width: 30%; }
-        }
-    </style>
+  body.dark-mode {
+    /* Latar belakang coklat gelap/hitam keabuan */
+    --bg-body: linear-gradient(135deg, #1B1B1B, #2a2a2a); 
+    --bg-paper: rgba(40, 40, 40, 0.75);
+    --paper-border: rgba(255, 255, 255, 0.1);
+    --text-main: #e0e0e0;
+    --border-color: #e0e0e0;
+    --kop-line: #e0e0e0;
+    --glass-nav-bg: rgba(30, 30, 30, 0.6);
+    --glass-nav-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.5);
+  }
+
+  body { 
+    font-family: "Times New Roman", Times, serif; 
+    font-size: 12pt; 
+    line-height: 1.5; 
+    margin: 0; 
+    background: var(--bg-body);
+    background-attachment: fixed;
+    color: var(--text-main);
+    transition: background 0.3s, color 0.3s;
+    min-height: 100vh;
+  }
+
+  /* Efek Gelembung (Glassmorphism Nav) */
+  .bubble-nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 500px;
+    background: var(--glass-nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-nav-border);
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px;
+    box-shadow: 0 4px 15px var(--glass-shadow);
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+
+  .bubble-nav img {
+    height: 35px;
+    width: auto;
+  }
+
+  .theme-switch {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    outline: none;
+    transition: transform 0.2s;
+  }
+
+  .theme-switch:hover {
+    transform: scale(1.1);
+  }
+
+  /* Kertas Surat dengan Efek Kaca dan Ujung Melengkung */
+  .kertas {
+    background: var(--bg-paper);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--paper-border);
+    border-radius: 20px;
+    max-width: 21cm;
+    margin: 100px auto 40px auto;
+    padding: 2.5cm;
+    box-shadow: 0 10px 30px var(--glass-shadow);
+    transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+  }
+
+  /* KOP SURAT */
+  .kop-surat {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
+  .kop-logo {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 90px; /* Sesuaikan ukuran logo */
+  }
+  .kop-logo img {
+    width: 100%;
+    height: auto;
+  }
+  .kop-text {
+    text-align: center;
+    width: 100%;
+    padding: 0 100px; /* Mencegah teks menabrak logo */
+  }
+  .kop-text h1 {
+    margin: 0;
+    font-size: 18pt;
+    font-weight: bold;
+    font-family: Arial, sans-serif; /* Sesuai standar desain logo modern */
+    color: var(--text-main);
+  }
+  .kop-text h2 {
+    margin: 3px 0;
+    font-size: 12.5pt;
+    font-weight: bold;
+  }
+  .kop-text p {
+    margin: 2px 0;
+    font-size: 9.5pt;
+  }
+  .garis-kop {
+    border: none;
+    border-top: 5px solid var(--kop-line);
+    margin-top: 10px;
+    margin-bottom: 25px;
+    transition: border-color 0.3s;
+  }
+
+  /* Elemen Surat */
+  .judul { text-align: center; margin-bottom: 25px; }
+  .judul h3 { margin: 0; font-size: 14pt; text-decoration: underline; }
+  .judul p { margin: 0; font-size: 11pt; }
+  .isi { text-align: justify; }
+  
+  .data-ttd table {
+    width: 100%;
+    max-width: 400px;
+    border: none;
+    margin-left: 0;
+  }
+  .data-ttd td { border: none; padding: 2px 5px; }
+
+  .ttd-box { width: 100%; margin-top: 40px; display: flex; justify-content: flex-end; }
+  .ttd-kanan { width: 250px; text-align: left; }
+  
+  /* Tanda Tangan Image */
+  .ttd-img {
+    height: 70px; /* Sesuaikan ukuran ttd agar proporsional */
+    display: block;
+    margin: 5px 0;
+  }
+
+  .page-break { 
+    page-break-before: always; 
+    margin-top: 40px; 
+    border-top: 1px dashed var(--border-color); 
+    padding-top: 40px; 
+    opacity: 0.5;
+  }
+  
+  /* Tabel Responsif */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 15px;
+    border-radius: 10px;
+  }
+  
+  table.data-mitra { width: 100%; border-collapse: collapse; font-size: 11pt; min-width: 500px; }
+  table.data-mitra th, table.data-mitra td { border: 1px solid var(--border-color); padding: 8px; text-align: left; }
+  table.data-mitra th { background-color: rgba(128, 128, 128, 0.15); text-align: center; }
+  td.center { text-align: center; }
+
+  /* Copyright Footer */
+  .copyright {
+    text-align: center;
+    font-size: 10px;
+    font-family: sans-serif;
+    color: gray;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  /* Responsif untuk Smartphone */
+  @media (max-width: 768px) {
+    .kertas {
+      margin: 90px 15px 20px 15px;
+      padding: 20px;
+      border-radius: 15px;
+    }
+    /* Susun kop vertikal di layar kecil */
+    .kop-surat {
+      flex-direction: column;
+    }
+    .kop-logo {
+      position: static;
+      transform: none;
+      width: 70px;
+      margin: 0 auto 10px auto;
+    }
+    .kop-text {
+      padding: 0;
+    }
+    .kop-text h1 { font-size: 14pt; }
+    .kop-text h2 { font-size: 11pt; }
+    
+    .ttd-kanan { width: 100%; text-align: right; }
+    .ttd-img { margin-left: auto; } /* Dorong gambar ttd ke kanan di mobile */
+    .page-break { border-top: none; }
+    body { font-size: 11pt; }
+  }
+
+  /* Mode Print (Cetak) */
+  @media print {
+    body { background: white; color: black; }
+    .bubble-nav, .copyright { display: none; }
+    .kertas { 
+      margin: 0; 
+      padding: 0; 
+      box-shadow: none; 
+      max-width: 100%; 
+      background: white;
+      border: none;
+      border-radius: 0;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    .garis-kop { border-top: 5px solid black; }
+    .page-break { page-break-before: always; border: none; margin: 0; padding: 0; opacity: 1; }
+    table.data-mitra th { background-color: #f2f2f2; border-color: black; }
+    table.data-mitra td { border-color: black; }
+  }
+</style>
 </head>
 <body>
-    <div class="main-wrapper">
-        <button class="btn-pdf no-print" onclick="unduhPDF()">📥 Unduh sebagai PDF</button>
-        
-        <div id="area-cetak">
-            <div class="container">
-                <h2>Rincian Pesanan</h2>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="col-nama">Nama Barang</th>
-                                <th class="col-harga">Harga (Rp)</th>
-                                <th class="col-qty">Jumlah</th>
-                                <th class="col-total">Total (Rp)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body">
-                            <tr>
-                                <td><input type="text" class="name-input" value="Amox"></td>
-                                <td><input type="number" class="price-input" value="1040" min="0"></td>
-                                <td><input type="number" class="qty-input" value="3" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Para"></td>
-                                <td><input type="number" class="price-input" value="300" min="0"></td>
-                                <td><input type="number" class="qty-input" value="1" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Ambrox"></td>
-                                <td><input type="number" class="price-input" value="25000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="1" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Amplo"></td>
-                                <td><input type="number" class="price-input" value="23000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="5" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Asam"></td>
-                                <td><input type="number" class="price-input" value="5000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="5" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Vit"></td>
-                                <td><input type="number" class="price-input" value="4000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="25" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Sirup"></td>
-                                <td><input type="number" class="price-input" value="5200" min="0"></td>
-                                <td><input type="number" class="qty-input" value="10" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Cotrim"></td>
-                                <td><input type="number" class="price-input" value="1040" min="0"></td>
-                                <td><input type="number" class="qty-input" value="1" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Para"></td>
-                                <td><input type="number" class="price-input" value="3500" min="0"></td>
-                                <td><input type="number" class="qty-input" value="10" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Promag"></td>
-                                <td><input type="number" class="price-input" value="25000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="10" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Ibu"></td>
-                                <td><input type="number" class="price-input" value="0" min="0"></td>
-                                <td><input type="number" class="qty-input" value="10" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Ctm"></td>
-                                <td><input type="number" class="price-input" value="23000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="1" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Bedak 22"></td>
-                                <td><input type="number" class="price-input" value="5000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="10" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Ctm"></td>
-                                <td><input type="number" class="price-input" value="5000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="10" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Salep"></td>
-                                <td><input type="number" class="price-input" value="5000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="24" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Tetes mata telinga"></td>
-                                <td><input type="number" class="price-input" value="20000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="10" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Dimen hidrinat"></td>
-                                <td><input type="number" class="price-input" value="25000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="1" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Oralit"></td>
-                                <td><input type="number" class="price-input" value="100000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="1" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                            <tr>
-                                <td><input type="text" class="name-input" value="Paralit"></td>
-                                <td><input type="number" class="price-input" value="500000" min="0"></td>
-                                <td><input type="number" class="qty-input" value="1" min="0"></td>
-                                <td class="text-right row-total currency">0</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr class="total-row">
-                                <td colspan="3" class="text-right">Total Keseluruhan:</td>
-                                <td id="grand-total" class="text-right currency highlight">0</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
+
+<!-- Navigasi Gelembung Kaca -->
+<div class="bubble-nav">
+  <img id="logo-nav" src="logopt2.webp" alt="Logo PT Media Tulisan Manusia">
+  <button class="theme-switch" id="btn-theme" title="Ubah Mode">🌙</button>
+</div>
+
+<!-- Kertas Surat Lembar 1 -->
+<div class="kertas">
+  
+  <!-- KOP SURAT -->
+  <div class="kop-surat">
+    <div class="kop-logo">
+      <img src="logopt.webp" alt="Logo MTM">
+    </div>
+    <div class="kop-text">
+      <h1>PT MEDIA TULISAN MANUSIA</h1>
+      <h2>Penerbit & Konsultan Hak Cipta</h2>
+      <p>Virtual Office: Jl. Raya Sukorejo No. 101,Pasuruan | Jl. S. Supriyadi No. 48, Malang</p>
+      <p>email: ptmediatulisanmanusia@gmail.com | website: www.mediatulisanmanusia.online</p>
+    </div>
+  </div>
+  <hr class="garis-kop">
+
+  <div class="judul">
+    <h3>SURAT KETERANGAN MITRA KERJA</h3>
+    <p>Nomor: 045/SK-MITRA/MTM/IX/2026</p>
+  </div>
+
+  <div class="isi">
+    <p>Yang bertanda tangan di bawah ini:</p>
+    <div class="data-ttd">
+      <table>
+        <tr><td style="width: 100px;">Nama</td><td style="width: 10px;">:</td><td><strong>Ach. Sufyan Wahyudi, S.Pd., M.Pd,. C.Ed</strong></td></tr>
+        <tr><td>Jabatan</td><td>:</td><td>Direktur Utama</td></tr>
+        <tr><td>Perusahaan</td><td>:</td><td>PT Media Tulisan Manusia</td></tr>
+      </table>
     </div>
 
-    <script>
-        function formatRupiah(number) {
-            return new Intl.NumberFormat('id-ID').format(number);
-        }
+    <p>Dengan ini menerangkan secara resmi bahwa nama-nama yang tercantum pada lampiran (Lembar 2) surat ini adalah benar berstatus sebagai <strong>Mitra Freelance (Mitra Marketing)</strong> resmi di PT Media Tulisan Manusia.</p>
 
-        function saveData() {
-            const dataToSave = [];
-            const rows = document.querySelectorAll('#table-body tr');
-            
-            rows.forEach(row => {
-                const nameInput = row.querySelector('.name-input');
-                const priceInput = row.querySelector('.price-input');
-                const qtyInput = row.querySelector('.qty-input');
-                dataToSave.push({
-                    name: nameInput.value,
-                    price: priceInput.value,
-                    qty: qtyInput.value
-                });
-            });
-            localStorage.setItem('pesananDataAutoSaveV3', JSON.stringify(dataToSave));
-        }
+    <p>Para pihak yang namanya tercantum memiliki wewenang sah untuk mempromosikan dan menawarkan layanan Penerbitan Buku berbasis QRCBN serta Pengurusan Hak Cipta resmi DJKI Kemenkumham RI kepada publik sesuai dengan regulasi perusahaan.</p>
 
-        function loadData() {
-            const savedData = localStorage.getItem('pesananDataAutoSaveV3');
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                const rows = document.querySelectorAll('#table-body tr');
-                
-                rows.forEach((row, index) => {
-                    if (data[index]) {
-                        if (data[index].name !== undefined) {
-                            row.querySelector('.name-input').value = data[index].name;
-                        }
-                        row.querySelector('.price-input').value = data[index].price;
-                        row.querySelector('.qty-input').value = data[index].qty;
-                    }
-                });
-            }
-        }
+    <p>Demikian surat keterangan ini diterbitkan untuk dipergunakan sebagaimana mestinya.</p>
+  </div>
 
-        function calculateTotals() {
-            let grandTotal = 0;
-            const rows = document.querySelectorAll('#table-body tr');
-            
-            rows.forEach(row => {
-                const priceInput = row.querySelector('.price-input');
-                const qtyInput = row.querySelector('.qty-input');
-                const totalCell = row.querySelector('.row-total');
-                
-                const price = parseFloat(priceInput.value) || 0;
-                const qty = parseFloat(qtyInput.value) || 0;
-                
-                const total = price * qty;
-                totalCell.textContent = formatRupiah(total);
-                
-                grandTotal += total;
-            });
-            
-            document.getElementById('grand-total').textContent = formatRupiah(grandTotal);
-            saveData();
-        }
+  <div class="ttd-box">
+    <div class="ttd-kanan">
+      <p>Pasuruan, 16 September 2026<br><strong>PT Media Tulisan Manusia</strong></p>
+      <!-- Tempat Tanda Tangan -->
+      <img src="signature.png" alt="Tanda Tangan Direktur" class="ttd-img">
+      <p><strong><u>Ach. Sufyan Wahyudi, S.Pd., M.Pd,. C.Ed</u></strong><br>Direktur Utama</p>
+    </div>
+  </div>
 
-        function unduhPDF() {
-            document.querySelectorAll('input').forEach(input => {
-                input.setAttribute('value', input.value);
-            });
+  <!-- Pembatas Halaman di Website -->
+  <div class="page-break"></div>
 
-            const elemenCetak = document.getElementById('area-cetak');
-            const opsiPDF = {
-                margin:       10,
-                filename:     'Rincian_Pesanan.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+  <!-- Kertas Surat Lembar 2 -->
+  <div class="judul" style="text-align: left;">
+    <p><strong>LAMPIRAN: SURAT KETERANGAN MITRA KERJA</strong></p>
+    <p>Nomor: 042/SK-MTM/IX/2026</p>
+    <p>Tanggal: 16 September 2026</p>
+  </div>
 
-            const tombol = document.querySelector('.btn-pdf');
-            const teksLama = tombol.innerText;
-            tombol.innerText = "⏳ Memproses PDF...";
-            
-            html2pdf().set(opsiPDF).from(elemenCetak).save().then(() => {
-                tombol.innerText = teksLama;
-            });
-        }
+  <h4 style="text-align: center; margin-top: 20px;">DAFTAR NAMA RESMI MITRA MARKETING FREELANCE</h4>
 
-        document.querySelectorAll('.price-input, .qty-input').forEach(input => {
-            input.addEventListener('input', calculateTotals);
-        });
-        document.querySelectorAll('.name-input').forEach(input => {
-            input.addEventListener('input', saveData);
-        });
+  <div class="table-responsive">
+    <table class="data-mitra">
+      <thead>
+        <tr>
+          <th style="width: 5%;">No.</th>
+          <th style="width: 15%;">No. ID</th>
+          <th>Nama Lengkap</th>
+          <th style="width: 25%;">Posisi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="center">1</td><td class="center">202610</td><td>Shafira Faridhatul Aulia</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">2</td><td class="center">202611</td><td>M Rudi Umairussalam</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">3</td><td class="center">202612</td><td>Alecya feriyani sosal</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">4</td><td class="center">202613</td><td>Dirga Firgiawan</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">5</td><td class="center">202614</td><td>Raina Zakiyya Shohwah</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">6</td><td class="center">202615</td><td>Indah Puspitasari</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">7</td><td class="center">202616</td><td>Lintang Emaji Nur Khoiriyah</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">8</td><td class="center">202617</td><td>Moh Bayu Saputra</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">9</td><td class="center">202618</td><td>Qurroti A'yunnina</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">10</td><td class="center">202619</td><td>Linda Rahmawati</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">11</td><td class="center">202620</td><td>Radya Pasha Irfan Yamin</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">12</td><td class="center">202621</td><td>Fajar Seftian Bahri</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">13</td><td class="center">202622</td><td>Reo Kurniawan I.P, C.Mtr</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">14</td><td class="center">202623</td><td>Rifaldi Teguh Andriansyah</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">15</td><td class="center">202624</td><td>Brillianty Dian Salsabilla</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">16</td><td class="center">202625</td><td>Sabrina Saharani</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">17</td><td class="center">202626</td><td>Natasya Salsabila Nurkhoirina</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">18</td><td class="center">202627</td><td>Arya Bisma Listian</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">19</td><td class="center">202628</td><td>Ni Kadek Marhaeni</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">20</td><td class="center">202629</td><td>Rifka Claresta Nur Aini</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">21</td><td class="center">202630</td><td>Much. Fitrian Sujatmiko</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">22</td><td class="center">202631</td><td>Dimas pandu maulana</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">23</td><td class="center">202632</td><td>Lailiatul hikmah</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">24</td><td class="center">202633</td><td>Imas Ayu Asih Yamin</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">25</td><td class="center">202634</td><td>Mareta Tri Cahya Sagita</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">26</td><td class="center">202635</td><td>Bernadus radytya Dwi Nugroho</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">27</td><td class="center">202636</td><td>Anastashya Putri Asmi Siregar</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">28</td><td class="center">202637</td><td>Nur Khalisah Afrina</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">29</td><td class="center">202638</td><td>Sukma aji Rahmansyah</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">30</td><td class="center">202639</td><td>Ega Ixsawan Livananta</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">31</td><td class="center">202640</td><td>Putri Salsabila Konyanan</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">32</td><td class="center">202641</td><td>Utslisa Aprilia Dinayanti</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">33</td><td class="center">202642</td><td>Yoana Yola</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">34</td><td class="center">202643</td><td>Tasyania Muthi Rafifah</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">35</td><td class="center">202644</td><td>Putri talita sakhi rafifah</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">36</td><td class="center">202645</td><td>Christa Maria Alfitri Tella Ware</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">37</td><td class="center">20267</td><td>Rara Ayunda Novitasari</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">38</td><td class="center">20268</td><td>Nada Putri Auliya Arsya</td><td>Mitra Marketing</td></tr>
+        <tr><td class="center">39</td><td class="center">20269</td><td>Maudi Putri Enismaya</td><td>Mitra Marketing</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData();
-            calculateTotals();
-        });
-    </script>
+<!-- Copyright -->
+<div class="copyright">
+  &copy; 2026 PT MEDIA TULISAN MANUSIA
+</div>
+
+<script>
+  const btnTheme = document.getElementById('btn-theme');
+  const body = document.body;
+  const logoNav = document.getElementById('logo-nav');
+
+  btnTheme.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    
+    // Ganti logo dan ikon tombol berdasarkan mode
+    if (body.classList.contains('dark-mode')) {
+      logoNav.src = 'logopt3.webp'; // Logo terang untuk latar gelap
+      btnTheme.textContent = '☀️';
+    } else {
+      logoNav.src = 'logopt2.webp'; // Logo gelap untuk latar terang
+      btnTheme.textContent = '🌙';
+    }
+  });
+</script>
 </body>
 </html>
 
