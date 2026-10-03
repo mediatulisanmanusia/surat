@@ -31,18 +31,19 @@
             z-index: 1;
         }
 
-        /* WATERMARK LOGO TRANSPARAN (DIJAMIN CENTER PRESISI) */
+        /* WATERMARK LOGO TRANSPARAN (Tampilan Web) */
         .with-watermark::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%;
+            height: 85%;
             background-image: url('REV 1-04 (2).png');
-            background-size: 75%; /* Ukuran logo disesuaikan agar pas di tengah */
+            background-size: contain;
             background-repeat: no-repeat;
-            background-position: center center;
+            background-position: center;
             opacity: 0.05; 
             z-index: -1; 
             pointer-events: none;
@@ -102,6 +103,7 @@
             border-collapse: collapse;
             margin-bottom: 15px;
             font-size: 12pt;
+            page-break-inside: avoid; /* Hindari tabel terpotong di tengah halaman */
         }
         table, th, td { border: 1px solid black; }
         th, td { padding: 6px 10px; text-align: left; vertical-align: top; }
@@ -114,6 +116,7 @@
             margin-top: 40px;
             text-align: center;
             width: 100%;
+            page-break-inside: avoid; /* Hindari tanda tangan terpotong ke halaman berikutnya */
         }
         .signature-box {
             width: 45%;
@@ -138,6 +141,7 @@
             padding: 15px;
             margin-bottom: 15px;
             background-color: #f8fafc;
+            page-break-inside: avoid;
         }
         .mockup-container {
             display: flex;
@@ -145,6 +149,7 @@
             gap: 15px;
             margin-top: 15px;
             margin-bottom: 15px;
+            page-break-inside: avoid;
         }
         .mockup-item {
             flex: 1;
@@ -189,6 +194,7 @@
             justify-content: space-between;
             gap: 20px;
             margin-top: 10px;
+            page-break-inside: avoid;
         }
         .rek-box {
             flex: 1;
@@ -209,6 +215,7 @@
             background-color: #f2f2f2;
             border-radius: 8px;
             border: 1px dashed #999;
+            page-break-inside: avoid;
         }
 
         /* Halaman Lampiran (Pamflet) */
@@ -257,27 +264,47 @@
             .mockup-container { flex-direction: column; }
         }
 
-        /* KODE RAHASIA CETAK PRESISI A4 */
+        /* KODE RAHASIA CETAK PRESISI A4 - DIPERBAIKI UNTUK MENCEGAH OVERFLOW */
         @media print {
-            @page { size: A4 portrait; margin: 0; }
+            @page { size: A4 portrait; margin: 20mm; /* Atur margin di @page, bukan di .page */ }
             body { background-color: white; margin: 0; padding: 0; }
             .page { 
-                width: 210mm !important;
-                height: 297mm !important;
-                max-width: 210mm !important;
-                min-height: 297mm !important;
-                max-height: 297mm !important;
+                width: auto !important; /* Biarkan lebar menyesuaikan */
+                height: auto !important; /* KUNCI: Biarkan tinggi otomatis mengalir */
+                max-width: none !important;
+                min-height: 0 !important;
+                max-height: none !important;
                 margin: 0 !important; 
-                padding: 20mm !important;
+                padding: 0 !important; /* Padding dinolkan, karena margin sudah diatur di @page */
                 box-shadow: none !important; 
                 page-break-after: always !important; 
-                page-break-inside: avoid !important;
-                position: relative !important;
             }
-            .cover-page { padding-top: 40mm !important; padding-bottom: 30mm !important; justify-content: space-between !important; }
+            .cover-page { padding-top: 20mm !important; padding-bottom: 20mm !important; min-height: 250mm !important;}
             .btn-print { display: none !important; }
-            .with-watermark { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            
+            /* Watermark Khusus Print */
+            .with-watermark::before { display: none; } /* Matikan yang absolute */
+            /* Gunakan trik fixed position untuk watermark saat print berulang */
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url('REV 1-04 (2).png');
+                background-size: 65%;
+                background-repeat: no-repeat;
+                background-position: center;
+                opacity: 0.05;
+                z-index: -1;
+                pointer-events: none;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
             .sponsor-box, .mockup-item, .logo-placeholder, .rek-box, .konfirmasi-text { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            
+            h2, h3 { page-break-after: avoid; } /* Hindari judul terpisah dari paragraf */
         }
     </style>
 </head>
