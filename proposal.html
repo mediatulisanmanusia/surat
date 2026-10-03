@@ -103,7 +103,7 @@
             border-collapse: collapse;
             margin-bottom: 15px;
             font-size: 12pt;
-            page-break-inside: avoid; /* Hindari tabel terpotong di tengah halaman */
+            page-break-inside: avoid;
         }
         table, th, td { border: 1px solid black; }
         th, td { padding: 6px 10px; text-align: left; vertical-align: top; }
@@ -116,7 +116,7 @@
             margin-top: 40px;
             text-align: center;
             width: 100%;
-            page-break-inside: avoid; /* Hindari tanda tangan terpotong ke halaman berikutnya */
+            page-break-inside: avoid;
         }
         .signature-box {
             width: 45%;
@@ -264,27 +264,25 @@
             .mockup-container { flex-direction: column; }
         }
 
-        /* KODE RAHASIA CETAK PRESISI A4 - DIPERBAIKI UNTUK MENCEGAH OVERFLOW */
+        /* KODE RAHASIA CETAK PRESISI A4 */
         @media print {
-            @page { size: A4 portrait; margin: 20mm; /* Atur margin di @page, bukan di .page */ }
+            @page { size: A4 portrait; margin: 20mm; }
             body { background-color: white; margin: 0; padding: 0; }
             .page { 
-                width: auto !important; /* Biarkan lebar menyesuaikan */
-                height: auto !important; /* KUNCI: Biarkan tinggi otomatis mengalir */
+                width: auto !important;
+                height: auto !important;
                 max-width: none !important;
                 min-height: 0 !important;
                 max-height: none !important;
                 margin: 0 !important; 
-                padding: 0 !important; /* Padding dinolkan, karena margin sudah diatur di @page */
+                padding: 0 !important; 
                 box-shadow: none !important; 
                 page-break-after: always !important; 
             }
             .cover-page { padding-top: 20mm !important; padding-bottom: 20mm !important; min-height: 250mm !important;}
             .btn-print { display: none !important; }
             
-            /* Watermark Khusus Print */
-            .with-watermark::before { display: none; } /* Matikan yang absolute */
-            /* Gunakan trik fixed position untuk watermark saat print berulang */
+            .with-watermark::before { display: none; }
             body::before {
                 content: "";
                 position: fixed;
@@ -303,8 +301,7 @@
                 print-color-adjust: exact;
             }
             .sponsor-box, .mockup-item, .logo-placeholder, .rek-box, .konfirmasi-text { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            
-            h2, h3 { page-break-after: avoid; } /* Hindari judul terpisah dari paragraf */
+            h2, h3 { page-break-after: avoid; }
         }
     </style>
 </head>
@@ -376,7 +373,7 @@
             <tr><th style="width: 40%;">Jabatan</th><th style="width: 60%;">Nama</th></tr>
             <tr><td>Penanggung Jawab</td><td>Ach. Sufyan Wahyudi</td></tr>
             <tr><td>Ketua Pelaksana</td><td>Linda Antika</td></tr>
-            <tr><td>Sekretaris</td><td>Fistra Deka Elvira</td></tr>
+            <tr><td>Sekretaris</td><td>Fiestra Deka Elvira</td></tr>
             <tr><td>Bendahara</td><td>Raras Galuh Safira</td></tr>
             <tr><td>Sie Acara</td><td>Nurul Khodaifi</td></tr>
             <tr><td>Sie Perlengkapan</td><td>Moh. Farid Alwaridsi</td></tr>
@@ -395,18 +392,27 @@
         </ol>
 
         <h2>BAB V<br>RENCANA ANGGARAN BIAYA (RAB)</h2>
+        <p>Guna menunjang kelancaran seluruh rangkaian kegiatan, berikut adalah Rencana Anggaran Biaya (RAB) operasional:</p>
         <table>
             <tr><th style="width: 65%;">Uraian Alokasi Dana</th><th style="width: 35%;">Nominal</th></tr>
-            <tr><td>Uang Pembinaan Juara (1, 2, 3)</td><td>Rp 350.000</td></tr>
-            <tr><td>Subsidi Layanan Hak Cipta / HKI (Juara 1)</td><td>Rp 800.000</td></tr>
-            <tr><td>Subsidi Penerbitan & Cetak Fisik (Juara 1-3)</td><td>Rp 1.500.000</td></tr>
-            <tr><td>Subsidi Potongan Penerbitan (Harapan 1-3)</td><td>Rp 350.000</td></tr>
+            <tr><td colspan="2" style="background-color: #fafafa; font-weight: bold;">1. Apresiasi & Hadiah Pemenang</td></tr>
+            <tr><td>- Uang Pembinaan Juara (1, 2, 3)</td><td>Rp 350.000</td></tr>
+            <tr><td>- Subsidi Layanan Hak Cipta / HKI (Juara 1)</td><td>Rp 800.000</td></tr>
+            <tr><td>- Subsidi Penerbitan & Cetak Fisik Buku (Juara 1-3)</td><td>Rp 1.500.000</td></tr>
+            <tr><td>- Subsidi Potongan Penerbitan (Harapan 1-3)</td><td>Rp 350.000</td></tr>
+            <tr><td colspan="2" style="background-color: #fafafa; font-weight: bold;">2. Kesekretariatan & Administrasi</td></tr>
+            <tr><td>- Cetak Proposal & Penjilidan</td><td>Rp 75.000</td></tr>
+            <tr><td>- Surat-menyurat & Keperluan Administrasi</td><td>Rp 25.000</td></tr>
+            <tr><td>- Cetak Sertifikat Fisik (Pemenang & Undangan)</td><td>Rp 100.000</td></tr>
+            <tr><td colspan="2" style="background-color: #fafafa; font-weight: bold;">3. Konsumsi Kegiatan</td></tr>
+            <tr><td>- Konsumsi Technical Meeting (30 Okt - 10 Org Internal)</td><td>Rp 150.000</td></tr>
+            <tr><td>- Konsumsi Puncak Awarding (10 Nov - 21 Org: Pemenang, VIP, Panitia @Rp15.000)</td><td>Rp 315.000</td></tr>
             <tr>
-                <td style="text-align: right;"><strong>Total Nilai Hadiah & Fasilitas</strong></td>
-                <td><strong>Rp 3.000.000</strong></td>
+                <td style="text-align: right;"><strong>TOTAL KESELURUHAN ANGGARAN</strong></td>
+                <td><strong>Rp 3.665.000</strong></td>
             </tr>
         </table>
-        <p style="font-size: 10pt; font-style: italic;">*Pembiayaan operasional kepanitiaan, sewa tempat (MCC), publikasi, dan administrasi diambil dari kas pendaftaran peserta dan dana sponsorship.</p>
+        <p style="font-size: 10pt; font-style: italic;">*Pembiayaan operasional kepanitiaan, sewa tempat (MCC), publikasi, dan administrasi bersumber dari kas pendaftaran peserta dan dana sponsorship.</p>
     </div>
 
     <!-- HALAMAN 4: PENUTUP & PENGESAHAN -->
