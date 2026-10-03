@@ -11,30 +11,27 @@
         body {
             background-color: #e5e7eb;
             margin: 0;
-            padding: 20px 0;
+            padding: 20px;
             font-family: 'Times New Roman', Times, serif;
             color: #000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
-        /* Pengaturan Kertas A4 (Presisi Cetak) */
+        /* Pengaturan Kertas (Tampilan Layar / Web) */
         .page {
             width: 210mm;
+            max-width: 100%; /* Memastikan tidak melebar/terpotong di layar HP */
             min-height: 297mm;
             background: white;
-            margin-bottom: 20px;
+            margin: 0 auto 20px auto; /* Membuat posisi ke tengah dengan sempurna */
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            padding: 20mm 20mm; /* Padding disesuaikan agar tidak over-flow ke halaman berikutnya */
+            padding: 20mm;
             box-sizing: border-box;
             position: relative;
             page-break-after: always;
-            page-break-inside: avoid;
             z-index: 1;
         }
 
-        /* WATERMARK LOGO TRANSPARAN (Dihapus dari Cover & Pamflet) */
+        /* WATERMARK LOGO TRANSPARAN */
         .with-watermark::before {
             content: "";
             position: absolute;
@@ -73,14 +70,13 @@
         
         ul, ol { margin-top: 0; padding-left: 20px; margin-bottom: 10px; }
         
-        /* Halaman Cover Khusus (Layout Flex Diperbaiki agar tidak turun ke Hal 2) */
+        /* Halaman Cover Khusus */
         .cover-page {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
             text-align: center;
-            height: 297mm; /* Kunci tinggi tepat A4 */
             padding-top: 40mm;
             padding-bottom: 30mm;
         }
@@ -91,6 +87,7 @@
         }
         .cover-logo {
             width: 220px; 
+            max-width: 80%;
             height: auto;
             margin: 0 auto;
         }
@@ -106,7 +103,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 297mm;
         }
         .attachment-title {
             font-size: 14pt;
@@ -146,7 +142,7 @@
             align-items: center;
         }
         .qr-signature {
-            width: 80px; /* Ukuran QR Code */
+            width: 80px;
             height: 80px;
             margin: 10px 0;
             object-fit: contain;
@@ -175,22 +171,39 @@
             font-size: 14px;
         }
 
-        /* KODE RAHASIA CETAK PRESISI (MEDIA PRINT) */
+        /* Tampilan Responsif Khusus Web HP (Tidak Mempengaruhi Cetak PDF) */
+        @media screen and (max-width: 768px) {
+            body { padding: 10px; }
+            .page { padding: 15mm 15mm; min-height: auto; }
+            .cover-page { padding-top: 20mm; padding-bottom: 20mm; min-height: 80vh; }
+            .cover-title { font-size: 16pt; }
+        }
+
+        /* KODE RAHASIA CETAK PRESISI A4 (Mengunci PDF secara Absolut) */
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 0; /* Margin dinolkan agar HTML yang mengontrol padding */
+                margin: 0; 
             }
             body { background-color: white; margin: 0; padding: 0; }
             .page { 
-                margin: 0; 
-                box-shadow: none; 
-                page-break-after: always; 
-                page-break-inside: avoid;
-                width: 210mm;
-                height: 297mm;
+                width: 210mm !important;
+                height: 297mm !important;
+                max-width: 210mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important; 
+                padding: 20mm !important;
+                box-shadow: none !important; 
+                page-break-after: always !important; 
+                page-break-inside: avoid !important;
             }
-            .btn-print { display: none; }
+            .cover-page {
+                padding-top: 40mm !important;
+                padding-bottom: 30mm !important;
+                justify-content: space-between !important;
+            }
+            .btn-print { display: none !important; }
             .with-watermark { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
     </style>
