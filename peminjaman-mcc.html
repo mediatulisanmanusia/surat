@@ -16,18 +16,18 @@
             color: #000;
         }
 
-        /* Pengaturan Kertas (Tampilan Layar / Web) */
+        /* Pengaturan Kertas F4 (Folio/Legal: 215mm x 330mm) */
         .page {
-            width: 210mm;
+            width: 215mm;
             max-width: 100%;
-            height: 297mm; /* Kunci tepat 1 halaman A4 */
+            height: 330mm; /* Kunci tepat 1 halaman F4 */
             background: white;
             margin: 0 auto; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            padding: 20mm;
+            padding: 25mm 20mm;
             box-sizing: border-box;
             position: relative;
-            overflow: hidden; /* Mencegah konten meluber */
+            overflow: hidden; 
             z-index: 1;
         }
 
@@ -40,7 +40,7 @@
             width: 100%;
             height: 100%;
             background-image: url('REV 1-04 (2).png');
-            background-size: 65%; /* Proporsional untuk ukuran surat */
+            background-size: 65%; /* Proporsional */
             background-repeat: no-repeat;
             background-position: center center;
             opacity: 0.05; 
@@ -48,35 +48,39 @@
             pointer-events: none;
         }
 
-        /* Kop Surat */
+        /* Kop Surat - Diubah agar simetris persis di tengah */
         .kop-surat {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: space-between; /* Membagi ruang kiri, tengah, kanan */
             border-bottom: 4px double #000;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
         }
         .kop-logo {
-            width: 120px;
+            width: 110px; /* Lebar logo konstan */
             height: auto;
-            margin-right: 20px;
         }
         .kop-teks {
             flex-grow: 1;
             text-align: center;
         }
+        .kop-spacer {
+            width: 110px; /* Elemen kosong pembantu agar teks di tengah benar-benar center */
+        }
+
+        /* Tipografi Kop */
         .kop-teks h1 {
             font-size: 22pt;
             margin: 0 0 5px 0;
             text-transform: uppercase;
             font-weight: bold;
             color: #0A2540;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
         .kop-teks p {
             font-size: 11pt;
-            margin: 2px 0;
+            margin: 3px 0;
             line-height: 1.3;
         }
 
@@ -84,7 +88,7 @@
         .info-surat {
             width: 100%;
             font-size: 12pt;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         .info-surat table {
             width: 100%;
@@ -93,34 +97,34 @@
         }
         .info-surat table td {
             border: none;
-            padding: 2px 0;
+            padding: 3px 0;
             vertical-align: top;
         }
 
         /* Tipografi Isi Surat */
         .isi-surat {
             font-size: 12pt;
-            line-height: 1.45;
+            line-height: 1.5; /* Diperlonggar sedikit karena F4 lebih panjang */
             text-align: justify;
         }
         .isi-surat p {
             margin-top: 0;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
         .isi-surat table {
             width: 90%;
-            margin: 10px auto;
+            margin: 15px auto;
             border-collapse: collapse;
         }
         .isi-surat table td {
-            padding: 3px 5px;
+            padding: 4px 5px;
             border: none;
             vertical-align: top;
         }
 
         /* Blok Tanda Tangan */
         .signature-container {
-            margin-top: 20px;
+            margin-top: 30px;
             text-align: right;
             width: 100%;
             display: flex;
@@ -136,8 +140,8 @@
             align-items: center;
         }
         .qr-signature {
-            width: 100px;
-            height: 80px;
+            width: 110px;
+            height: auto;
             margin: 5px 0;
             object-fit: contain;
         }
@@ -170,21 +174,23 @@
             body { padding: 10px; }
             .page { padding: 15mm; height: auto; }
             .kop-logo { width: 80px; }
-            .kop-teks h1 { font-size: 14pt; }
+            .kop-spacer { width: 80px; }
+            .kop-teks h1 { font-size: 13pt; }
             .kop-teks p { font-size: 8pt; }
         }
 
-        /* KODE CETAK PRESISI A4 (1 LEMBAR) */
+        /* KODE CETAK PRESISI F4 (1 LEMBAR) */
         @media print {
-            @page { size: A4 portrait; margin: 0; }
+            /* 8.5in x 13in adalah standar Folio / F4 */
+            @page { size: 215mm 330mm portrait; margin: 0; }
             body { background-color: white; margin: 0; padding: 0; }
             .page { 
-                width: 210mm !important;
-                height: 297mm !important;
-                max-width: 210mm !important;
-                max-height: 297mm !important;
+                width: 215mm !important;
+                height: 330mm !important;
+                max-width: 215mm !important;
+                max-height: 330mm !important;
                 margin: 0 !important; 
-                padding: 20mm !important;
+                padding: 25mm 20mm !important;
                 box-shadow: none !important; 
                 page-break-after: avoid !important;
                 page-break-inside: avoid !important;
@@ -200,19 +206,20 @@
     <button class="btn-print" onclick="window.print()">🖨️ Simpan sebagai PDF</button>
 
     <div class="page">
-        <!-- KOP SURAT -->
+        <!-- KOP SURAT (Desain seimbang kiri & kanan agar teks pas di tengah) -->
         <div class="kop-surat">
             <img src="REV 1-04 (2).png" alt="Logo MTM" class="kop-logo">
             <div class="kop-teks">
                 <h1>MEDIA TULISAN MANUSIA</h1>
-                <p>Website: www.mediatulisanmanusia.com | Email: admin@mediatulisanmanusia.com</p>
+                <p>Website: www.mediatulisanmanusia.com &nbsp;|&nbsp; Email: admin@mediatulisanmanusia.com</p>
                 <p>WhatsApp: 0882-9444-8222 / 0822-3345-6016</p>
             </div>
+            <div class="kop-spacer"></div> <!-- Penyeimbang logo -->
         </div>
 
         <!-- TANGGAL DAN INFO SURAT -->
         <div class="info-surat">
-            <div style="text-align: right; margin-bottom: 15px;">
+            <div style="text-align: right; margin-bottom: 20px;">
                 Malang, 4 Oktober 2026
             </div>
             <table>
@@ -268,7 +275,7 @@
                     <td>:</td>
                     <td>09.00 WIB s.d. Selesai</td>
                 </tr>
-                <tr><td colspan="4" style="padding: 5px 0;"></td></tr>
+                <tr><td colspan="4" style="padding: 6px 0;"></td></tr>
                 <tr>
                     <td><strong>2.</strong></td>
                     <td><strong>Agenda</strong></td>
