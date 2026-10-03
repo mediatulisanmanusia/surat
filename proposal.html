@@ -109,6 +109,11 @@
         th, td { padding: 6px 10px; text-align: left; vertical-align: top; }
         th { background-color: #f2f2f2; text-align: center; }
 
+        /* Kelas khusus untuk memaksa Bab V di halaman baru */
+        .page-break-before {
+            page-break-before: always;
+        }
+
         /* Blok Tanda Tangan */
         .signature-container {
             display: flex;
@@ -365,7 +370,7 @@
         </ol>
     </div>
 
-    <!-- HALAMAN 3: BAB 3, 4, 5 -->
+    <!-- HALAMAN 3: BAB 3 & BAB 4 -->
     <div class="page with-watermark">
         <h2>BAB III<br>SUSUNAN KEPANITIAAN</h2>
         <p>Guna melancarkan pelaksanaan Lomba Menulis Novela Nasional 2026, dibentuklah susunan kepanitiaan inti sebagai berikut:</p>
@@ -373,7 +378,7 @@
             <tr><th style="width: 40%;">Jabatan</th><th style="width: 60%;">Nama</th></tr>
             <tr><td>Penanggung Jawab</td><td>Ach. Sufyan Wahyudi</td></tr>
             <tr><td>Ketua Pelaksana</td><td>Linda Antika</td></tr>
-            <tr><td>Sekretaris</td><td>Fiestra Deka Elvira</td></tr>
+            <tr><td>Sekretaris</td><td>Fistra Deka Elvira</td></tr>
             <tr><td>Bendahara</td><td>Raras Galuh Safira</td></tr>
             <tr><td>Sie Acara</td><td>Nurul Khodaifi</td></tr>
             <tr><td>Sie Perlengkapan</td><td>Moh. Farid Alwaridsi</td></tr>
@@ -390,7 +395,10 @@
             <li><strong>Harapan 1, 2, dan 3:</strong> Voucher Potongan Spesial Penerbitan dan Sertifikat.</li>
             <li><strong>Fasilitas Seluruh Peserta:</strong> E-Sertifikat Nasional, Naskah tayang di web, dan Voucher Diskon Khusus.</li>
         </ol>
+    </div>
 
+    <!-- HALAMAN 4: BAB V (RENCANA ANGGARAN BIAYA - KINI DI HALAMAN SENDIRI) -->
+    <div class="page with-watermark page-break-before">
         <h2>BAB V<br>RENCANA ANGGARAN BIAYA (RAB)</h2>
         <p>Guna menunjang kelancaran seluruh rangkaian kegiatan, berikut adalah Rencana Anggaran Biaya (RAB) operasional:</p>
         <table>
@@ -412,10 +420,10 @@
                 <td><strong>Rp 3.665.000</strong></td>
             </tr>
         </table>
-        <p style="font-size: 10pt; font-style: italic;">*Pembiayaan operasional kepanitiaan, sewa tempat (MCC), publikasi, dan administrasi bersumber dari kas pendaftaran peserta dan dana sponsorship.</p>
+        <p style="font-size: 10pt; font-style: italic; margin-top: 15px;">*Pembiayaan operasional kepanitiaan, sewa tempat (MCC), publikasi, dan administrasi bersumber dari kas pendaftaran peserta dan dana sponsorship.</p>
     </div>
 
-    <!-- HALAMAN 4: PENUTUP & PENGESAHAN -->
+    <!-- HALAMAN 5: PENUTUP & PENGESAHAN -->
     <div class="page with-watermark">
         <h2>BAB VI<br>PENUTUP</h2>
         <p>Demikian proposal kegiatan Lomba Menulis Novela Tingkat Nasional 2026 ini kami susun sebagai kerangka acuan kerja sekaligus landasan kerja sama dengan berbagai pihak. Kami percaya bahwa kolaborasi yang baik antara penyelenggara, peserta, dan mitra sponsor akan menjadikan kegiatan ini sebagai pijakan penting bagi pertumbuhan literasi di Indonesia.</p>
@@ -442,7 +450,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN 5: LAMPIRAN I (SPONSORSHIP) -->
+    <!-- HALAMAN 6: LAMPIRAN I (SPONSORSHIP) -->
     <div class="page with-watermark">
         <h2 style="margin-bottom: 5px;">LAMPIRAN I</h2>
         <h3 style="text-align: center; margin-top: 0; font-size: 14pt;">PENAWARAN KERJA SAMA SPONSORSHIP</h3>
@@ -506,7 +514,7 @@
         </div>
     </div>
 
-    <!-- HALAMAN 6: LAMPIRAN II (PAMFLET) -->
+    <!-- HALAMAN 7: LAMPIRAN II (PAMFLET) -->
     <div class="page attachment-page">
         <div class="attachment-title">LAMPIRAN II: PAMFLET KEGIATAN</div>
         <img src="pamflet.png" alt="Pamflet Lomba Menulis Novela" class="attachment-img">
