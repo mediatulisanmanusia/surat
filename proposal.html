@@ -19,10 +19,10 @@
         /* Pengaturan Kertas (Tampilan Layar / Web) */
         .page {
             width: 210mm;
-            max-width: 100%; /* Memastikan tidak melebar/terpotong di layar HP */
+            max-width: 100%;
             min-height: 297mm;
             background: white;
-            margin: 0 auto 20px auto; /* Membuat posisi ke tengah dengan sempurna */
+            margin: 0 auto 20px auto; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             padding: 20mm;
             box-sizing: border-box;
@@ -31,15 +31,15 @@
             z-index: 1;
         }
 
-        /* WATERMARK LOGO TRANSPARAN */
+        /* WATERMARK LOGO TRANSPARAN (Diperbesar & Center) */
         .with-watermark::before {
             content: "";
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 60%; 
-            height: 60%;
+            width: 85%; /* Diperbesar dari sebelumnya 60% */
+            height: 85%;
             background-image: url('REV 1-04 (2).png');
             background-size: contain;
             background-repeat: no-repeat;
@@ -86,7 +86,7 @@
             line-height: 1.5;
         }
         .cover-logo {
-            width: 220px; 
+            width: 320px; /* Logo diperbesar dari 220px */
             max-width: 80%;
             height: auto;
             margin: 0 auto;
@@ -171,7 +171,7 @@
             font-size: 14px;
         }
 
-        /* Tampilan Responsif Khusus Web HP (Tidak Mempengaruhi Cetak PDF) */
+        /* Tampilan Responsif Khusus Web HP */
         @media screen and (max-width: 768px) {
             body { padding: 10px; }
             .page { padding: 15mm 15mm; min-height: auto; }
@@ -179,7 +179,7 @@
             .cover-title { font-size: 16pt; }
         }
 
-        /* KODE RAHASIA CETAK PRESISI A4 (Mengunci PDF secara Absolut) */
+        /* KODE RAHASIA CETAK PRESISI A4 */
         @media print {
             @page {
                 size: A4 portrait;
