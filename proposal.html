@@ -19,41 +19,37 @@
             align-items: center;
         }
 
-        /* Pengaturan Kertas A4 */
+        /* Pengaturan Kertas A4 (Presisi Cetak) */
         .page {
             width: 210mm;
             min-height: 297mm;
             background: white;
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            padding: 25mm 20mm;
+            padding: 20mm 20mm; /* Padding disesuaikan agar tidak over-flow ke halaman berikutnya */
             box-sizing: border-box;
             position: relative;
             page-break-after: always;
-            z-index: 1; /* Penting untuk watermark */
+            page-break-inside: avoid;
+            z-index: 1;
         }
 
-        /* WATERMARK LOGO TRANSPARAN */
-        .page::before {
+        /* WATERMARK LOGO TRANSPARAN (Dihapus dari Cover & Pamflet) */
+        .with-watermark::before {
             content: "";
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 65%; /* Ukuran logo di background */
-            height: 65%;
-            background-image: url('REV 1-04 (2).png'); /* Mengambil logo yang sama */
+            width: 60%; 
+            height: 60%;
+            background-image: url('REV 1-04 (2).png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            opacity: 0.06; /* Tingkat transparansi (sangat tipis agar teks tetap terbaca) */
-            z-index: -1; /* Berada di belakang teks */
+            opacity: 0.05; 
+            z-index: -1; 
             pointer-events: none;
-        }
-
-        /* Hapus watermark khusus di halaman pamflet agar tidak menabrak gambar pamflet */
-        .no-watermark::before {
-            display: none;
         }
 
         /* Tipografi Proposal */
@@ -64,44 +60,44 @@
             line-height: 1.3;
         }
         h1 { font-size: 16pt; margin-bottom: 20px; }
-        h2 { font-size: 14pt; margin-top: 20px; }
+        h2 { font-size: 14pt; margin-top: 15px; margin-bottom: 15px; }
         h3 { font-size: 12pt; text-align: left; text-transform: none; font-weight: bold; margin-top: 15px; margin-bottom: 5px; }
         
         p, li {
             font-size: 12pt;
-            line-height: 1.5;
+            line-height: 1.4;
             text-align: justify;
             margin-top: 0;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
-        ul, ol { margin-top: 0; padding-left: 20px; }
+        ul, ol { margin-top: 0; padding-left: 20px; margin-bottom: 10px; }
         
-        /* Halaman Cover Khusus */
+        /* Halaman Cover Khusus (Layout Flex Diperbaiki agar tidak turun ke Hal 2) */
         .cover-page {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
             text-align: center;
-            height: 247mm; /* Mengurangi padding vertikal */
+            height: 297mm; /* Kunci tinggi tepat A4 */
+            padding-top: 40mm;
+            padding-bottom: 30mm;
         }
         .cover-title {
-            font-size: 20pt;
+            font-size: 18pt;
             font-weight: bold;
             line-height: 1.5;
-            margin-top: 20px;
         }
         .cover-logo {
-            width: 250px; /* Ukuran logo agak dibesarkan sedikit karena jadi pusat */
+            width: 220px; 
             height: auto;
-            margin: auto 0; /* Membuat logo otomatis berada di tengah halaman */
+            margin: 0 auto;
         }
         .cover-footer {
             font-size: 14pt;
             font-weight: bold;
             line-height: 1.3;
-            margin-bottom: 20px;
         }
 
         /* Halaman Lampiran (Pamflet) */
@@ -110,18 +106,18 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            height: 297mm;
         }
         .attachment-title {
             font-size: 14pt;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .attachment-img {
             max-width: 100%;
-            max-height: 230mm;
+            max-height: 240mm;
             object-fit: contain;
             border: 1px solid #ddd;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         /* Tabel Kepanitiaan & Anggaran */
@@ -131,28 +127,29 @@
             margin-bottom: 15px;
             font-size: 12pt;
         }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 8px 12px;
-            text-align: left;
-            vertical-align: top;
-        }
+        table, th, td { border: 1px solid black; }
+        th, td { padding: 6px 10px; text-align: left; vertical-align: top; }
         th { background-color: #f2f2f2; text-align: center; }
 
-        /* Blok Tanda Tangan */
+        /* Blok Tanda Tangan Barcode (QR) */
         .signature-container {
             display: flex;
             justify-content: space-between;
-            margin-top: 50px;
+            margin-top: 40px;
             text-align: center;
+            width: 100%;
         }
         .signature-box {
             width: 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .signature-space {
-            height: 80px; /* Ruang untuk tanda tangan basah/digital */
+        .qr-signature {
+            width: 80px; /* Ukuran QR Code */
+            height: 80px;
+            margin: 10px 0;
+            object-fit: contain;
         }
         .signature-name {
             font-weight: bold;
@@ -177,15 +174,24 @@
             border: none;
             font-size: 14px;
         }
-        .btn-print:hover { background-color: #D4AF37; color: #0A2540; }
 
-        /* Pengaturan Cetak (Media Print) */
+        /* KODE RAHASIA CETAK PRESISI (MEDIA PRINT) */
         @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0; /* Margin dinolkan agar HTML yang mengontrol padding */
+            }
             body { background-color: white; margin: 0; padding: 0; }
-            .page { margin: 0; box-shadow: none; page-break-after: always; }
+            .page { 
+                margin: 0; 
+                box-shadow: none; 
+                page-break-after: always; 
+                page-break-inside: avoid;
+                width: 210mm;
+                height: 297mm;
+            }
             .btn-print { display: none; }
-            /* Memastikan background image (watermark) ikut tercetak */
-            .page { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .with-watermark { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
     </style>
 </head>
@@ -194,16 +200,14 @@
     <!-- Tombol Print -->
     <button class="btn-print" onclick="window.print()">🖨️ Simpan sebagai PDF</button>
 
-    <!-- HALAMAN 1: COVER -->
+    <!-- HALAMAN 1: COVER (Tanpa Watermark) -->
     <div class="page cover-page">
-        <!-- Judul Pindah ke Atas -->
         <div class="cover-title">
             PROPOSAL KEGIATAN<br>
             LOMBA MENULIS NOVELA (NOVEL PENDEK)<br>
             TINGKAT NASIONAL 2026
         </div>
         
-        <!-- Logo Berada di Tengah (Sesuai Coretan Merah) -->
         <img src="REV 1-04 (2).png" alt="Logo MTM" class="cover-logo">
         
         <div class="cover-footer">
@@ -213,8 +217,8 @@
         </div>
     </div>
 
-    <!-- HALAMAN 2: BAB 1 & 2 -->
-    <div class="page">
+    <!-- HALAMAN 2: BAB 1 & 2 (Dengan Watermark) -->
+    <div class="page with-watermark">
         <h2>BAB I<br>PENDAHULUAN</h2>
         
         <h3>1.1 Latar Belakang</h3>
@@ -242,30 +246,30 @@
 
         <h3>2.3 Waktu Pelaksanaan (Linimasa)</h3>
         <ul>
-            <li><strong>Pendaftaran Peserta:</strong> 5 Oktober – 25 Oktober 2026</li>
-            <li><strong>Technical Meeting (TM):</strong> 30 Oktober 2026 (Daring via Zoom/Google Meet)</li>
-            <li><strong>Pengumpulan Naskah:</strong> 1 November – 5 November 2026</li>
-            <li><strong>Masa Penjurian:</strong> 6 November – 9 November 2026</li>
+            <li><strong>Pendaftaran Peserta:</strong> 5 - 25 Oktober 2026</li>
+            <li><strong>Technical Meeting (TM):</strong> 30 Oktober 2026 (Daring)</li>
+            <li><strong>Pengumpulan Naskah:</strong> 1 - 5 November 2026</li>
+            <li><strong>Masa Penjurian:</strong> 6 - 9 November 2026</li>
             <li><strong>Pengumuman Pemenang:</strong> 10 November 2026</li>
         </ul>
 
         <h3>2.4 Syarat dan Ketentuan Utama</h3>
         <ol>
-            <li>Peserta mendaftarkan diri melalui website resmi Media Tulisan Manusia.</li>
+            <li>Mendaftar melalui website resmi Media Tulisan Manusia.</li>
             <li>Biaya pendaftaran sebesar Rp50.000 per karya/naskah.</li>
             <li>Naskah diketik di kertas A4, font Times New Roman 12, spasi 1.5, dengan panjang minimal 50 halaman.</li>
             <li>Karya wajib bersifat orisinal, bebas plagiasi, dan tidak dibuat secara utuh menggunakan <i>Artificial Intelligence</i> (AI).</li>
         </ol>
     </div>
 
-    <!-- HALAMAN 3: BAB 3, 4, 5 -->
-    <div class="page">
+    <!-- HALAMAN 3: BAB 3, 4, 5 (Dengan Watermark) -->
+    <div class="page with-watermark">
         <h2>BAB III<br>SUSUNAN KEPANITIAAN</h2>
         <p>Guna melancarkan pelaksanaan Lomba Menulis Novela Nasional 2026, dibentuklah susunan kepanitiaan inti sebagai berikut:</p>
         <table>
             <tr>
-                <th style="width: 50%;">Jabatan</th>
-                <th style="width: 50%;">Nama</th>
+                <th style="width: 40%;">Jabatan</th>
+                <th style="width: 60%;">Nama</th>
             </tr>
             <tr><td>Penanggung Jawab</td><td>Ach. Sufyan Wahyudi</td></tr>
             <tr><td>Ketua Pelaksana</td><td>Linda Antika</td></tr>
@@ -274,16 +278,15 @@
             <tr><td>Sie Acara</td><td>Nurul Khodaifi</td></tr>
             <tr><td>Sie Perlengkapan</td><td>Moh. Farid Alwaridsi</td></tr>
             <tr><td>Konsumsi</td><td>Amnah Tahta Alfina</td></tr>
-            <tr><td>PDD (Publikasi, Dekorasi, Dokumentasi)</td><td>Ervina Nur Khasanah</td></tr>
+            <tr><td>PDD (Publikasi & Dokumentasi)</td><td>Ervina Nur Khasanah</td></tr>
             <tr><td>Sponsorship & Medpart</td><td>Izza Nur Afkarina</td></tr>
         </table>
 
         <h2>BAB IV<br>SKEMA APRESIASI DAN HADIAH</h2>
-        <p>Total nilai apresiasi yang diperebutkan dalam lomba ini adalah sebesar <strong>Rp3.000.000</strong>, dengan rincian apresiasi pemenang sebagai berikut:</p>
+        <p>Total nilai apresiasi yang diperebutkan adalah sebesar <strong>Rp3.000.000</strong>, dengan rincian sebagai berikut:</p>
         <ol>
-            <li><strong>Juara 1:</strong> Uang Pembinaan, Penerbitan Buku, Cetak Buku Fisik, Sertifikat, dan Pendaftaran Hak Cipta (HKI).</li>
-            <li><strong>Juara 2:</strong> Uang Pembinaan, Penerbitan Buku, Cetak Buku Fisik, dan Sertifikat.</li>
-            <li><strong>Juara 3:</strong> Uang Pembinaan, Penerbitan Buku, Cetak Buku Fisik, dan Sertifikat.</li>
+            <li><strong>Juara 1:</strong> Uang Pembinaan, Terbit, Cetak Fisik, Sertifikat, dan Hak Cipta (HKI).</li>
+            <li><strong>Juara 2 & 3:</strong> Uang Pembinaan, Penerbitan Buku, Cetak Buku Fisik, dan Sertifikat.</li>
             <li><strong>Harapan 1, 2, dan 3:</strong> Voucher Potongan Spesial Penerbitan dan Sertifikat.</li>
             <li><strong>Fasilitas Seluruh Peserta:</strong> E-Sertifikat Nasional, Naskah tayang di website, dan Voucher Diskon Khusus.</li>
         </ol>
@@ -291,29 +294,29 @@
         <h2>BAB V<br>RENCANA ANGGARAN BIAYA (RAB)</h2>
         <table>
             <tr>
-                <th style="width: 60%;">Uraian Alokasi Dana</th>
-                <th style="width: 40%;">Nominal</th>
+                <th style="width: 65%;">Uraian Alokasi Dana</th>
+                <th style="width: 35%;">Nominal</th>
             </tr>
             <tr><td>Uang Pembinaan Juara (1, 2, 3)</td><td>Rp 350.000</td></tr>
             <tr><td>Subsidi Layanan Hak Cipta / HKI (Juara 1)</td><td>Rp 800.000</td></tr>
-            <tr><td>Subsidi Penerbitan & Cetak Buku Fisik (Juara 1-3)</td><td>Rp 1.500.000</td></tr>
+            <tr><td>Subsidi Penerbitan & Cetak Fisik (Juara 1-3)</td><td>Rp 1.500.000</td></tr>
             <tr><td>Subsidi Potongan Penerbitan (Harapan 1-3)</td><td>Rp 350.000</td></tr>
             <tr>
                 <td style="text-align: right;"><strong>Total Nilai Hadiah & Fasilitas</strong></td>
                 <td><strong>Rp 3.000.000</strong></td>
             </tr>
         </table>
-        <p><i>*Catatan: Pembiayaan operasional kepanitiaan, sewa tempat (jika ada), publikasi, dan administrasi diambil dari kas masuk pendaftaran peserta dan dana sponsorship.</i></p>
+        <p style="font-size: 10pt; font-style: italic;">*Pembiayaan operasional kepanitiaan, sewa tempat, publikasi, dan administrasi diambil dari kas pendaftaran peserta dan dana sponsorship.</p>
     </div>
 
-    <!-- HALAMAN 4: PENUTUP & PENGESAHAN -->
-    <div class="page">
+    <!-- HALAMAN 4: PENUTUP & PENGESAHAN (Dengan Watermark) -->
+    <div class="page with-watermark">
         <h2>BAB VI<br>PENUTUP</h2>
         <p>Demikian proposal kegiatan Lomba Menulis Novela Tingkat Nasional 2026 ini kami susun sebagai kerangka acuan kerja sekaligus landasan kerja sama dengan berbagai pihak. Kami percaya bahwa kolaborasi yang baik antara penyelenggara, peserta, dan mitra sponsor akan menjadikan kegiatan ini sebagai pijakan penting bagi pertumbuhan literasi di Indonesia.</p>
         <p>Atas perhatian, dukungan, kerja sama, serta partisipasi dari seluruh pihak, kami ucapkan terima kasih.</p>
 
-        <!-- Blok Pengesahan -->
-        <div style="margin-top: 50px; text-align: right;">
+        <!-- Blok Pengesahan dengan QR Code TTD -->
+        <div style="margin-top: 40px; text-align: right;">
             Malang, 2 Oktober 2026
         </div>
         
@@ -322,7 +325,10 @@
                 Panitia Pelaksana<br>
                 <strong>Lomba Menulis Novela 2026</strong><br>
                 Ketua Pelaksana,
-                <div class="signature-space"></div>
+                
+                <!-- Tanda Tangan QR Linda -->
+                <img src="qrttd.png" alt="TTD QR Linda" class="qr-signature">
+                
                 <span class="signature-name">Linda Antika</span>
             </div>
             
@@ -330,15 +336,17 @@
                 Mengetahui / Menyetujui,<br>
                 <strong>Media Tulisan Manusia</strong><br>
                 Penanggung Jawab,
-                <div class="signature-space"></div>
+                
+                <!-- Tanda Tangan QR Sufyan -->
+                <img src="qrttd.png" alt="TTD QR Sufyan" class="qr-signature">
+                
                 <span class="signature-name">Ach. Sufyan Wahyudi</span>
             </div>
         </div>
     </div>
 
     <!-- HALAMAN 5: LAMPIRAN (PAMFLET) -->
-    <!-- Kelas no-watermark ditambahkan agar gambar pamflet tidak bertabrakan dengan logo latar belakang -->
-    <div class="page attachment-page no-watermark">
+    <div class="page attachment-page">
         <div class="attachment-title">LAMPIRAN: PAMFLET KEGIATAN</div>
         <img src="pamflet.png" alt="Pamflet Lomba Menulis Novela" class="attachment-img">
     </div>
