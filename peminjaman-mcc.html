@@ -20,13 +20,32 @@
         .page {
             width: 210mm;
             max-width: 100%;
-            min-height: 297mm;
+            height: 297mm; /* Kunci tepat 1 halaman A4 */
             background: white;
-            margin: 0 auto 20px auto; 
+            margin: 0 auto; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            padding: 25mm 20mm;
+            padding: 20mm;
             box-sizing: border-box;
             position: relative;
+            overflow: hidden; /* Mencegah konten meluber */
+            z-index: 1;
+        }
+
+        /* WATERMARK LOGO TRANSPARAN (DI TENGAH SURAT) */
+        .page::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('REV 1-04 (2).png');
+            background-size: 65%; /* Proporsional untuk ukuran surat */
+            background-repeat: no-repeat;
+            background-position: center center;
+            opacity: 0.05; 
+            z-index: -1; 
+            pointer-events: none;
         }
 
         /* Kop Surat */
@@ -36,7 +55,7 @@
             justify-content: flex-start;
             border-bottom: 4px double #000;
             padding-bottom: 10px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         .kop-logo {
             width: 120px;
@@ -48,23 +67,16 @@
             text-align: center;
         }
         .kop-teks h1 {
-            font-size: 16pt;
-            margin: 0;
-            text-transform: uppercase;
-            font-weight: bold;
-            color: #0A2540;
-        }
-        .kop-teks h2 {
-            font-size: 20pt;
-            margin: 5px 0;
+            font-size: 22pt;
+            margin: 0 0 5px 0;
             text-transform: uppercase;
             font-weight: bold;
             color: #0A2540;
             letter-spacing: 1px;
         }
         .kop-teks p {
-            font-size: 10pt;
-            margin: 0;
+            font-size: 11pt;
+            margin: 2px 0;
             line-height: 1.3;
         }
 
@@ -72,7 +84,7 @@
         .info-surat {
             width: 100%;
             font-size: 12pt;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         .info-surat table {
             width: 100%;
@@ -88,27 +100,27 @@
         /* Tipografi Isi Surat */
         .isi-surat {
             font-size: 12pt;
-            line-height: 1.5;
+            line-height: 1.45;
             text-align: justify;
         }
         .isi-surat p {
             margin-top: 0;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .isi-surat table {
             width: 90%;
-            margin: 15px auto;
+            margin: 10px auto;
             border-collapse: collapse;
         }
         .isi-surat table td {
-            padding: 5px;
+            padding: 3px 5px;
             border: none;
             vertical-align: top;
         }
 
         /* Blok Tanda Tangan */
         .signature-container {
-            margin-top: 40px;
+            margin-top: 20px;
             text-align: right;
             width: 100%;
             display: flex;
@@ -124,9 +136,9 @@
             align-items: center;
         }
         .qr-signature {
-            width: 120px; /* Lebar tanda tangan disesuaikan */
-            height: auto;
-            margin: 10px 0;
+            width: 100px;
+            height: 80px;
+            margin: 5px 0;
             object-fit: contain;
         }
         .signature-name {
@@ -156,14 +168,13 @@
         /* Tampilan Web HP */
         @media screen and (max-width: 768px) {
             body { padding: 10px; }
-            .page { padding: 15mm; min-height: auto; }
+            .page { padding: 15mm; height: auto; }
             .kop-logo { width: 80px; }
-            .kop-teks h1 { font-size: 12pt; }
-            .kop-teks h2 { font-size: 14pt; }
+            .kop-teks h1 { font-size: 14pt; }
             .kop-teks p { font-size: 8pt; }
         }
 
-        /* KODE CETAK PRESISI A4 */
+        /* KODE CETAK PRESISI A4 (1 LEMBAR) */
         @media print {
             @page { size: A4 portrait; margin: 0; }
             body { background-color: white; margin: 0; padding: 0; }
@@ -171,12 +182,14 @@
                 width: 210mm !important;
                 height: 297mm !important;
                 max-width: 210mm !important;
-                min-height: 297mm !important;
                 max-height: 297mm !important;
                 margin: 0 !important; 
-                padding: 25mm 20mm !important;
+                padding: 20mm !important;
                 box-shadow: none !important; 
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
             }
+            .page::before { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .btn-print { display: none !important; }
         }
     </style>
@@ -191,8 +204,7 @@
         <div class="kop-surat">
             <img src="REV 1-04 (2).png" alt="Logo MTM" class="kop-logo">
             <div class="kop-teks">
-                <h1>PERUSAHAAN PENERBITAN DAN HKI</h1>
-                <h2>PT MEDIA TULISAN MANUSIA</h2>
+                <h1>MEDIA TULISAN MANUSIA</h1>
                 <p>Website: www.mediatulisanmanusia.com | Email: admin@mediatulisanmanusia.com</p>
                 <p>WhatsApp: 0882-9444-8222 / 0822-3345-6016</p>
             </div>
@@ -200,7 +212,7 @@
 
         <!-- TANGGAL DAN INFO SURAT -->
         <div class="info-surat">
-            <div style="text-align: right; margin-bottom: 20px;">
+            <div style="text-align: right; margin-bottom: 15px;">
                 Malang, 4 Oktober 2026
             </div>
             <table>
@@ -233,7 +245,7 @@
             
             <p>Puji syukur kita panjatkan ke hadirat Tuhan Yang Maha Esa atas segala rahmat dan karunia-Nya. Semoga Bapak/Ibu beserta seluruh jajaran pengelola Malang Creative Center (MCC) senantiasa dalam keadaan sehat dan sukses dalam menjalankan aktivitas sehari-hari.</p>
 
-            <p>Sehubungan dengan akan diselenggarakannya <strong>"Lomba Menulis Novela (Novel Pendek) Tingkat Nasional 2026"</strong> oleh PT Media Tulisan Manusia, kami bermaksud memohon izin peminjaman ruang / tempat beserta fasilitas penunjang (kursi, sound system, mikrofon, proyektor, dan layar) di Malang Creative Center (MCC).</p>
+            <p>Sehubungan dengan akan diselenggarakannya <strong>"Lomba Menulis Novela (Novel Pendek) Tingkat Nasional 2026"</strong> oleh Media Tulisan Manusia, kami bermaksud memohon izin peminjaman ruang / tempat beserta fasilitas penunjang (kursi, sound system, mikrofon, proyektor, dan layar) di Malang Creative Center (MCC).</p>
 
             <p>Adapun penggunaan ruangan tersebut akan kami gunakan untuk 2 (dua) agenda utama lomba, dengan rincian jadwal sebagai berikut:</p>
 
@@ -256,7 +268,7 @@
                     <td>:</td>
                     <td>09.00 WIB s.d. Selesai</td>
                 </tr>
-                <tr><td colspan="4" style="padding: 10px 0;"></td></tr>
+                <tr><td colspan="4" style="padding: 5px 0;"></td></tr>
                 <tr>
                     <td><strong>2.</strong></td>
                     <td><strong>Agenda</strong></td>
@@ -286,14 +298,14 @@
         <div class="signature-container">
             <div class="signature-box">
                 Hormat kami,<br>
-                <strong>PT Media Tulisan Manusia</strong><br>
+                <strong>Media Tulisan Manusia</strong><br>
                 Penanggung Jawab Lomba,
                 
                 <!-- Gambar Tanda Tangan Sufyan -->
                 <img src="ttdsufyan.png" alt="Tanda Tangan Sufyan" class="qr-signature">
                 
                 <span class="signature-name">Ach. Sufyan Wahyudi</span><br>
-                <span style="font-size: 11pt;">Direktur Utama</span>
+                <span style="font-size: 11pt;">Chief Executive Officer</span>
             </div>
         </div>
     </div>
