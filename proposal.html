@@ -31,19 +31,18 @@
             z-index: 1;
         }
 
-        /* WATERMARK LOGO TRANSPARAN */
+        /* WATERMARK LOGO TRANSPARAN (DIJAMIN CENTER PRESISI) */
         .with-watermark::before {
             content: "";
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 85%;
-            height: 85%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: url('REV 1-04 (2).png');
-            background-size: contain;
+            background-size: 75%; /* Ukuran logo disesuaikan agar pas di tengah */
             background-repeat: no-repeat;
-            background-position: center;
+            background-position: center center;
             opacity: 0.05; 
             z-index: -1; 
             pointer-events: none;
@@ -273,6 +272,7 @@
                 box-shadow: none !important; 
                 page-break-after: always !important; 
                 page-break-inside: avoid !important;
+                position: relative !important;
             }
             .cover-page { padding-top: 40mm !important; padding-bottom: 30mm !important; justify-content: space-between !important; }
             .btn-print { display: none !important; }
@@ -331,7 +331,7 @@
             <li><strong>Technical Meeting (TM):</strong> 30 Oktober 2026 (Daring)</li>
             <li><strong>Pengumpulan Naskah:</strong> 1 - 5 November 2026</li>
             <li><strong>Masa Penjurian:</strong> 6 - 9 November 2026</li>
-            <li><strong>Pengumuman Pemenang:</strong> 10 November 2026</li>
+            <li><strong>Pengumuman Pemenang:</strong> 10 November 2026 <br><i>(Venue Puncak Acara: Malang Creative Center - MCC)</i></li>
         </ul>
         <h3>2.4 Syarat dan Ketentuan Utama</h3>
         <ol>
@@ -349,7 +349,7 @@
             <tr><th style="width: 40%;">Jabatan</th><th style="width: 60%;">Nama</th></tr>
             <tr><td>Penanggung Jawab</td><td>Ach. Sufyan Wahyudi</td></tr>
             <tr><td>Ketua Pelaksana</td><td>Linda Antika</td></tr>
-            <tr><td>Sekretaris</td><td>Fistra Deka Elvira</td></tr>
+            <tr><td>Sekretaris</td><td>Fiestra Deka Elvira</td></tr>
             <tr><td>Bendahara</td><td>Raras Galuh Safira</td></tr>
             <tr><td>Sie Acara</td><td>Nurul Khodaifi</td></tr>
             <tr><td>Sie Perlengkapan</td><td>Moh. Farid Alwaridsi</td></tr>
@@ -379,7 +379,7 @@
                 <td><strong>Rp 3.000.000</strong></td>
             </tr>
         </table>
-        <p style="font-size: 10pt; font-style: italic;">*Pembiayaan operasional kepanitiaan, sewa tempat, publikasi, dan administrasi diambil dari kas pendaftaran peserta dan dana sponsorship.</p>
+        <p style="font-size: 10pt; font-style: italic;">*Pembiayaan operasional kepanitiaan, sewa tempat (MCC), publikasi, dan administrasi diambil dari kas pendaftaran peserta dan dana sponsorship.</p>
     </div>
 
     <!-- HALAMAN 4: PENUTUP & PENGESAHAN -->
@@ -420,7 +420,8 @@
             <h3 style="margin-top: 0; text-align: center; color: #0A2540;">BENEFIT & KONTRA PRESTASI SPONSOR</h3>
             <ul style="font-size: 11pt; margin-bottom: 0;">
                 <li>Pencantuman <strong>Logo Sponsor</strong> pada media publikasi utama (Pamflet, E-Sertifikat Nasional, dan Website Resmi Kegiatan).</li>
-                <li>Penyebutan nama/produk sponsor <i>(ad-libs)</i> oleh pembawa acara saat pelaksanaan <i>Technical Meeting</i>.</li>
+                <li>Penyebutan nama/produk sponsor <i>(ad-libs)</i> oleh pembawa acara saat <i>Technical Meeting</i> dan <strong>Puncak Pengumuman Pemenang di Malang Creative Center (MCC)</strong>.</li>
+                <li><strong>Undangan Kehormatan (VIP)</strong> bagi perwakilan pihak sponsor untuk hadir langsung pada acara Puncak Pengumuman Pemenang di Malang Creative Center (MCC).</li>
                 <li>Penayangan profil perusahaan atau produk sponsor di grup peserta atau sesuai dengan <i>request</i> kesepakatan bersama.</li>
             </ul>
         </div>
