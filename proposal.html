@@ -29,24 +29,26 @@
             position: relative;
             page-break-after: always;
             z-index: 1;
+            overflow: hidden;
         }
 
-        /* WATERMARK LOGO TRANSPARAN (Tampilan Web - Merata di Semua Halaman) */
-        .with-watermark::before {
-            content: "";
+        /* WATERMARK FISIK DI TENGAH HALAMAN (DIJAMIN MUNCUL SAAT PDF) */
+        .watermark-img {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 85%;
-            height: 85%;
-            background-image: url('REV 1-04 (2).png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            opacity: 0.05; 
-            z-index: -1; 
+            width: 65%;
+            height: auto;
+            opacity: 0.05;
+            z-index: 0;
             pointer-events: none;
+        }
+
+        /* Memastikan isi halaman berada di atas watermark */
+        .page > * {
+            position: relative;
+            z-index: 2;
         }
 
         /* Tipografi Proposal */
@@ -286,25 +288,7 @@
             }
             .cover-page { padding-top: 20mm !important; padding-bottom: 20mm !important; min-height: 250mm !important;}
             .btn-print { display: none !important; }
-            
-            .with-watermark::before { display: none; }
-            body::before {
-                content: "";
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: url('REV 1-04 (2).png');
-                background-size: 65%;
-                background-repeat: no-repeat;
-                background-position: center;
-                opacity: 0.05;
-                z-index: -1;
-                pointer-events: none;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
+            .watermark-img { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .sponsor-box, .mockup-item, .logo-placeholder, .rek-box, .konfirmasi-text { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             h2, h3 { page-break-after: avoid; }
         }
@@ -331,7 +315,8 @@
     </div>
 
     <!-- HALAMAN 2: BAB 1 & 2 -->
-    <div class="page with-watermark">
+    <div class="page">
+        <img src="REV 1-04 (2).png" alt="Watermark" class="watermark-img">
         <h2>BAB I<br>PENDAHULUAN</h2>
         <h3>1.1 Latar Belakang</h3>
         <p>Perkembangan literasi di era digital menuntut adanya inovasi dalam penjaringan karya tulis sekaligus perlindungan hak kekayaan intelektual bagi para penulis. Banyak penulis muda dan berbakat di Indonesia yang memiliki karya luar biasa, namun terkendala oleh minimnya akses penerbitan profesional dan edukasi mengenai pentingnya legalitas karya (Hak Cipta).</p>
@@ -371,7 +356,8 @@
     </div>
 
     <!-- HALAMAN 3: BAB 3 & BAB 4 -->
-    <div class="page with-watermark">
+    <div class="page">
+        <img src="REV 1-04 (2).png" alt="Watermark" class="watermark-img">
         <h2>BAB III<br>SUSUNAN KEPANITIAAN</h2>
         <p>Guna melancarkan pelaksanaan Lomba Menulis Novela Nasional 2026, dibentuklah susunan kepanitiaan inti sebagai berikut:</p>
         <table>
@@ -398,7 +384,8 @@
     </div>
 
     <!-- HALAMAN 4: BAB V (RENCANA ANGGARAN BIAYA) -->
-    <div class="page with-watermark page-break-before">
+    <div class="page page-break-before">
+        <img src="REV 1-04 (2).png" alt="Watermark" class="watermark-img">
         <h2>BAB V<br>RENCANA ANGGARAN BIAYA (RAB)</h2>
         <p>Guna menunjang kelancaran seluruh rangkaian kegiatan, berikut adalah Rencana Anggaran Biaya (RAB) operasional:</p>
         <table>
@@ -424,7 +411,8 @@
     </div>
 
     <!-- HALAMAN 5: PENUTUP & PENGESAHAN -->
-    <div class="page with-watermark">
+    <div class="page">
+        <img src="REV 1-04 (2).png" alt="Watermark" class="watermark-img">
         <h2>BAB VI<br>PENUTUP</h2>
         <p>Demikian proposal kegiatan Lomba Menulis Novela Tingkat Nasional 2026 ini kami susun sebagai kerangka acuan kerja sekaligus landasan kerja sama dengan berbagai pihak. Kami percaya bahwa kolaborasi yang baik antara penyelenggara, peserta, dan mitra sponsor akan menjadikan kegiatan ini sebagai pijakan penting bagi pertumbuhan literasi di Indonesia.</p>
         <p>Atas perhatian, dukungan, kerja sama, serta partisipasi dari seluruh pihak, kami ucapkan terima kasih.</p>
@@ -451,7 +439,8 @@
     </div>
 
     <!-- HALAMAN 6: LAMPIRAN I (SPONSORSHIP) -->
-    <div class="page with-watermark">
+    <div class="page">
+        <img src="REV 1-04 (2).png" alt="Watermark" class="watermark-img">
         <h2 style="margin-bottom: 5px;">LAMPIRAN I</h2>
         <h3 style="text-align: center; margin-top: 0; font-size: 14pt;">PENAWARAN KERJA SAMA SPONSORSHIP</h3>
         
@@ -515,7 +504,7 @@
     </div>
 
     <!-- HALAMAN 7: LAMPIRAN II (PAMFLET) -->
-    <div class="page with-watermark attachment-page">
+    <div class="page attachment-page">
         <div class="attachment-title">LAMPIRAN II: PAMFLET KEGIATAN</div>
         <img src="pamflet.png" alt="Pamflet Lomba Menulis Novela" class="attachment-img">
     </div>
