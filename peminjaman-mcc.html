@@ -24,7 +24,7 @@
             background: white;
             margin: 0 auto; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            padding: 25mm 20mm;
+            padding: 15mm 20mm; /* Margin atas bawah dikurangi agar muat banyak */
             box-sizing: border-box;
             position: relative;
             overflow: hidden; 
@@ -40,7 +40,7 @@
             width: 100%;
             height: 100%;
             background-image: url('REV 1-04 (2).png');
-            background-size: 65%; /* Proporsional */
+            background-size: 60%; /* Proporsional */
             background-repeat: no-repeat;
             background-position: center center;
             opacity: 0.05; 
@@ -48,17 +48,17 @@
             pointer-events: none;
         }
 
-        /* Kop Surat - Diubah agar simetris persis di tengah */
+        /* Kop Surat - Simetris dan Teks Dipaksa Sejajar */
         .kop-surat {
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Membagi ruang kiri, tengah, kanan */
+            justify-content: space-between;
             border-bottom: 4px double #000;
-            padding-bottom: 12px;
-            margin-bottom: 25px;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
         .kop-logo {
-            width: 110px; /* Lebar logo konstan */
+            width: 105px; 
             height: auto;
         }
         .kop-teks {
@@ -66,29 +66,31 @@
             text-align: center;
         }
         .kop-spacer {
-            width: 110px; /* Elemen kosong pembantu agar teks di tengah benar-benar center */
+            width: 105px; /* Elemen penyeimbang logo kiri */
         }
 
         /* Tipografi Kop */
         .kop-teks h1 {
-            font-size: 22pt;
+            font-size: 19pt; /* Dikecilkan sedikit agar hemat ruang */
             margin: 0 0 5px 0;
             text-transform: uppercase;
             font-weight: bold;
             color: #0A2540;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
         }
-        .kop-teks p {
-            font-size: 11pt;
-            margin: 3px 0;
-            line-height: 1.3;
+        /* CLASS KHUSUS MEMAKSA TEKS SEJAJAR */
+        .kop-kontak {
+            font-size: 9.5pt; /* Font dikecilkan sesuai instruksi */
+            margin: 2px 0;
+            line-height: 1.2;
+            white-space: nowrap; /* KUNCI UTAMA: Haram hukumnya turun baris */
         }
 
         /* Informasi Surat (Nomor, Hal, Lampiran) */
         .info-surat {
             width: 100%;
-            font-size: 12pt;
-            margin-bottom: 25px;
+            font-size: 11pt; /* Font info dikecilkan jadi 11 */
+            margin-bottom: 15px;
         }
         .info-surat table {
             width: 100%;
@@ -97,23 +99,23 @@
         }
         .info-surat table td {
             border: none;
-            padding: 3px 0;
+            padding: 2px 0;
             vertical-align: top;
         }
 
-        /* Tipografi Isi Surat */
+        /* Tipografi Isi Surat - Diperkecil menjadi 11pt agar ttd muat */
         .isi-surat {
-            font-size: 12pt;
-            line-height: 1.5; /* Diperlonggar sedikit karena F4 lebih panjang */
+            font-size: 11pt; 
+            line-height: 1.4; 
             text-align: justify;
         }
         .isi-surat p {
             margin-top: 0;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .isi-surat table {
             width: 90%;
-            margin: 15px auto;
+            margin: 10px auto;
             border-collapse: collapse;
         }
         .isi-surat table td {
@@ -124,7 +126,7 @@
 
         /* Blok Tanda Tangan */
         .signature-container {
-            margin-top: 30px;
+            margin-top: 20px;
             text-align: right;
             width: 100%;
             display: flex;
@@ -138,9 +140,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            font-size: 11pt;
         }
         .qr-signature {
-            width: 110px;
+            width: 90px; /* Diperkecil sedikit agar tidak menabrak batas bawah */
             height: auto;
             margin: 5px 0;
             object-fit: contain;
@@ -173,15 +176,14 @@
         @media screen and (max-width: 768px) {
             body { padding: 10px; }
             .page { padding: 15mm; height: auto; }
-            .kop-logo { width: 80px; }
-            .kop-spacer { width: 80px; }
+            .kop-logo { width: 75px; }
+            .kop-spacer { width: 75px; }
             .kop-teks h1 { font-size: 13pt; }
-            .kop-teks p { font-size: 8pt; }
+            .kop-kontak { font-size: 7.5pt; } /* Extra kecil di layar HP agar tetap sejajar */
         }
 
         /* KODE CETAK PRESISI F4 (1 LEMBAR) */
         @media print {
-            /* 8.5in x 13in adalah standar Folio / F4 */
             @page { size: 215mm 330mm portrait; margin: 0; }
             body { background-color: white; margin: 0; padding: 0; }
             .page { 
@@ -190,7 +192,7 @@
                 max-width: 215mm !important;
                 max-height: 330mm !important;
                 margin: 0 !important; 
-                padding: 25mm 20mm !important;
+                padding: 15mm 20mm !important; /* Padding 1.5 cm atas bawah */
                 box-shadow: none !important; 
                 page-break-after: avoid !important;
                 page-break-inside: avoid !important;
@@ -206,20 +208,21 @@
     <button class="btn-print" onclick="window.print()">🖨️ Simpan sebagai PDF</button>
 
     <div class="page">
-        <!-- KOP SURAT (Desain seimbang kiri & kanan agar teks pas di tengah) -->
+        <!-- KOP SURAT -->
         <div class="kop-surat">
             <img src="REV 1-04 (2).png" alt="Logo MTM" class="kop-logo">
             <div class="kop-teks">
                 <h1>MEDIA TULISAN MANUSIA</h1>
-                <p>Website: www.mediatulisanmanusia.com &nbsp;|&nbsp; Email: admin@mediatulisanmanusia.com</p>
-                <p>WhatsApp: 0882-9444-8222 / 0822-3345-6016</p>
+                <!-- CLASS KOP-KONTAK UNTUK MEMAKSA SEJAJAR -->
+                <p class="kop-kontak">Website: www.mediatulisanmanusia.com &nbsp;|&nbsp; Email: admin@mediatulisanmanusia.com</p>
+                <p class="kop-kontak">WhatsApp: 0882-9444-8222 / 0822-3345-6016</p>
             </div>
-            <div class="kop-spacer"></div> <!-- Penyeimbang logo -->
+            <div class="kop-spacer"></div>
         </div>
 
         <!-- TANGGAL DAN INFO SURAT -->
         <div class="info-surat">
-            <div style="text-align: right; margin-bottom: 20px;">
+            <div style="text-align: right; margin-bottom: 15px;">
                 Malang, 4 Oktober 2026
             </div>
             <table>
@@ -275,12 +278,12 @@
                     <td>:</td>
                     <td>09.00 WIB s.d. Selesai</td>
                 </tr>
-                <tr><td colspan="4" style="padding: 6px 0;"></td></tr>
+                <tr><td colspan="4" style="padding: 5px 0;"></td></tr>
                 <tr>
                     <td><strong>2.</strong></td>
                     <td><strong>Agenda</strong></td>
                     <td>:</td>
-                    <td><strong>Puncak Pengumuman Pemenang & Penyerahan Hadiah</strong></td>
+                    <td><strong>Pengumuman Pemenang & Penyerahan Hadiah</strong></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -301,7 +304,7 @@
             <p>Besar harapan kami agar Bapak/Ibu berkenan mengabulkan permohonan peminjaman tempat ini demi kelancaran dan kesuksesan jalannya acara literasi tingkat nasional ini. Demikian surat permohonan ini kami sampaikan. Atas perhatian, dukungan, dan kerja sama Bapak/Ibu, kami ucapkan terima kasih.</p>
         </div>
 
-        <!-- TANDA TANGAN -->
+        <!-- TANDA TANGAN (Sekarang pasti muncul karena font diperkecil & margin dipotong) -->
         <div class="signature-container">
             <div class="signature-box">
                 Hormat kami,<br>
@@ -312,7 +315,7 @@
                 <img src="ttdsufyan.png" alt="Tanda Tangan Sufyan" class="qr-signature">
                 
                 <span class="signature-name">Ach. Sufyan Wahyudi</span><br>
-                <span style="font-size: 11pt;">Chief Executive Officer</span>
+                <span>Chief Executive Officer</span>
             </div>
         </div>
     </div>
