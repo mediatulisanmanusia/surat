@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOR Lomba Menulis Novela 2026</title>
+    <style>
+        /* Pengaturan Dasar dan Font */
+        @import url('https://fonts.googleapis.com/css2?family=Times+New+Roman:wght@400;700&display=swap');
+        
+        body {
+            background-color: #e5e7eb;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            color: #000;
+        }
+
+        /* Pengaturan Kertas (Tampilan Layar / Web) */
+        .page {
+            width: 210mm;
+            max-width: 100%;
+            min-height: 297mm;
+            background: white;
+            margin: 0 auto 20px auto; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            padding: 20mm;
+            box-sizing: border-box;
+            position: relative;
+            page-break-after: always;
+            z-index: 1;
+        }
+
+        /* Tipografi Dokumen */
+        h1, h2, h3, h4 {
+            text-align: center;
+            text-transform: uppercase;
+            margin: 0 0 15px 0;
+            line-height: 1.3;
+        }
+        h1 { font-size: 16pt; margin-bottom: 20px; }
+        h2 { font-size: 14pt; margin-top: 15px; margin-bottom: 15px; }
+        h3 { font-size: 12pt; text-align: left; text-transform: none; font-weight: bold; margin-top: 15px; margin-bottom: 5px; }
+        
+        p, li {
+            font-size: 12pt;
+            line-height: 1.4;
+            text-align: justify;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+        
+        ul, ol { margin-top: 0; padding-left: 20px; margin-bottom: 10px; }
+        
+        /* Halaman Cover Khusus */
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding-top: 40mm;
+            padding-bottom: 30mm;
+        }
+        .cover-title {
+            font-size: 18pt;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+        .cover-logo {
+            width: 320px; 
+            max-width: 80%;
+            height: auto;
+            margin: 0 auto;
+        }
+        .cover-footer {
+            font-size: 14pt;
+            font-weight: bold;
+            line-height: 1.3;
+        }
+
+        /* Tabel Umum */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 12pt;
+            page-break-inside: avoid;
+        }
+        table, th, td { border: 1px solid black; }
+        th, td { padding: 6px 10px; text-align: left; vertical-align: top; }
+        th { background-color: #f2f2f2; text-align: center; }
+
+        /* Blok Tanda Tangan */
+        .signature-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            text-align: center;
+            width: 100%;
+            page-break-inside: avoid;
+        }
+        .signature-box {
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .qr-signature {
+            width: 80px;
+            height: 80px;
+            margin: 10px 0;
+            object-fit: contain;
+        }
+        .signature-name {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        
+        .link-box {
+            background-color: #f8fafc;
+            border: 1px dashed #0A2540;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+        }
+
+        /* Tombol Print */
+        .btn-print {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #0A2540;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 1000;
+            border: none;
+            font-size: 14px;
+        }
+
+        /* Tampilan Web HP */
+        @media screen and (max-width: 768px) {
+            body { padding: 10px; }
+            .page { padding: 15mm 15mm; min-height: auto; }
+            .cover-page { padding-top: 20mm; padding-bottom: 20mm; min-height: 80vh; }
+        }
+
+        /* KODE CETAK PRESISI A4 */
+        @media print {
+            @page { size: A4 portrait; margin: 20mm; }
+            body { background-color: white; margin: 0; padding: 0; }
+            .page { 
+                width: auto !important;
+                height: auto !important;
+                max-width: none !important;
+                min-height: 0 !important;
+                max-height: none !important;
+                margin: 0 !important; 
+                padding: 0 !important; 
+                box-shadow: none !important; 
+                page-break-after: always !important; 
+            }
+            .cover-page { padding-top: 20mm !important; padding-bottom: 20mm !important; min-height: 250mm !important;}
+            .btn-print { display: none !important; }
+            .link-box, th, td { 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+            }
+            h2, h3 { page-break-after: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tombol Print -->
+    <button class="btn-print" onclick="window.print()">🖨️ Simpan sebagai PDF</button>
+
+    <!-- HALAMAN 1: COVER -->
+    <div class="page cover-page">
+        <div class="cover-title">
+            TERMS OF REFERENCE (TOR)<br>
+            LOMBA MENULIS NOVELA (NOVEL PENDEK)<br>
+            TINGKAT NASIONAL 2026
+        </div>
+        <img src="REV 1-04 (2).png" alt="Logo MTM" class="cover-logo">
+        <div class="cover-footer">
+            PENYELENGGARA:<br>
+            PT MEDIA TULISAN MANUSIA<br>
+            2026
+        </div>
+    </div>
+
+    <!-- HALAMAN 2: BAB A - E -->
+    <div class="page">
+        <h3>A. Latar Belakang</h3>
+        <p>Perkembangan literasi di era digital menuntut adanya inovasi dalam penjaringan karya tulis sekaligus perlindungan hak kekayaan intelektual bagi para penulis. Banyak penulis muda dan berbakat di Indonesia yang memiliki karya luar biasa, namun terkendala oleh minimnya akses penerbitan profesional dan edukasi mengenai pentingnya legalitas karya (Hak Cipta).</p>
+        <p>Sebagai ekosistem literasi yang bergerak di bidang penerbitan, publikasi, dan jasa pendaftaran Hak Kekayaan Intelektual (HKI), PT Media Tulisan Manusia mengambil peran aktif untuk menjembatani kebutuhan tersebut. Melalui "Lomba Menulis Novela Tingkat Nasional 2026", kami berupaya memberikan ruang apresiasi bagi penulis, memfasilitasi penerbitan buku secara fisik maupun digital, serta memastikan karya-karya unggulan mendapatkan perlindungan hukum yang sah.</p>
+
+        <h3>B. Tujuan Kegiatan</h3>
+        <ol>
+            <li>Menjaring naskah novela (novel pendek) berkualitas dari para penulis di seluruh Indonesia.</li>
+            <li>Memfasilitasi proses penerbitan, tata letak, cetak fisik, hingga distribusi karya secara profesional.</li>
+            <li>Memberikan edukasi dan perlindungan hukum nyata melalui pendaftaran Hak Cipta (HKI) bagi karya pemenang.</li>
+            <li>Menciptakan iklim kompetisi literasi yang positif bagi masyarakat umum.</li>
+        </ol>
+
+        <h3>C. Nama dan Tema Kegiatan</h3>
+        <ul>
+            <li><strong>Nama Kegiatan:</strong> Lomba Menulis Novela (Novel Pendek) Nasional 2026</li>
+            <li><strong>Tema Karya:</strong> BEBAS (Tidak mengandung unsur SARA, pornografi, ujaran kebencian, dan tidak melanggar hukum yang berlaku).</li>
+        </ul>
+
+        <h3>D. Sasaran Peserta</h3>
+        <p>Kegiatan ini berskala nasional dan terbuka untuk <strong>Kategori Umum</strong> (Pelajar, Mahasiswa, Akademisi, dan Masyarakat Umum) dari seluruh wilayah Indonesia tanpa batasan usia.</p>
+
+        <h3>E. Syarat dan Ketentuan Utama</h3>
+        <ol>
+            <li>Biaya pendaftaran sebesar Rp50.000 per karya/naskah.</li>
+            <li>Naskah diketik di kertas A4, font Times New Roman 12, spasi 1.5, dengan panjang minimal 50 halaman.</li>
+            <li><strong>Kolaborasi:</strong> Satu (1) naskah/karya diperbolehkan ditulis oleh lebih dari 1 penulis (kepenulisan bersama).</li>
+            <li>Karya harus asli, bukan plagiasi, belum pernah diterbitkan, dan dilarang keras menggunakan AI secara utuh.</li>
+            <li>Pendaftaran dan panduan selengkapnya diakses melalui portal resmi Media Tulisan Manusia:
+                <div class="link-box">
+                    • Syarat Lengkap: <strong>mediatulisanmanusia.com/halaman-lomba</strong><br>
+                    • Pendaftaran: <strong>mediatulisanmanusia.com/daftar-lomba</strong>
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <!-- HALAMAN 3: BAB F - I (TERMASUK RAB PEMENANG) -->
+    <div class="page">
+        <h3>F. Waktu Pelaksanaan (Linimasa)</h3>
+        <ul>
+            <li><strong>Pendaftaran Peserta:</strong> 5 - 25 Oktober 2026</li>
+            <li><strong>Technical Meeting (TM):</strong> 30 Oktober 2026 (Daring)</li>
+            <li><strong>Pengumpulan Naskah:</strong> 1 - 5 November 2026</li>
+            <li><strong>Masa Penjurian:</strong> 6 - 9 November 2026</li>
+            <li><strong>Pengumuman Pemenang:</strong> 10 November 2026 <br><i>(Bertepatan dengan Hari Pahlawan. Venue Puncak Acara: Malang Creative Center - MCC)</i></li>
+        </ul>
+
+        <h3>G. Susunan Kepanitiaan Inti & Dewan Juri</h3>
+        <ul>
+            <li><strong>Penanggung Jawab:</strong> Ach. Sufyan Wahyudi</li>
+            <li><strong>Ketua Pelaksana:</strong> Linda Antika</li>
+            <li><strong>Sekretaris:</strong> Fistra Deka Elvira</li>
+            <li><strong>Bendahara:</strong> Raras Galuh Safira</li>
+            <li><strong>Dewan Juri:</strong> Nikita Jasmine Almira <i>(Penulis & Praktisi Literasi)</i></li>
+        </ul>
+
+        <h3>H. Skema Apresiasi dan Hadiah (Rencana Anggaran Pemenang)</h3>
+        <p>Total nilai apresiasi yang diperebutkan adalah sebesar <strong>Rp3.000.000</strong>, dengan rincian alokasi sebagai berikut:</p>
+        <table>
+            <tr><th style="width: 65%;">Uraian Alokasi Dana Apresiasi</th><th style="width: 35%;">Nominal</th></tr>
+            <tr><td colspan="2" style="background-color: #fafafa; font-weight: bold;">1. Juara 1, 2, dan 3</td></tr>
+            <tr><td>- Uang Pembinaan</td><td>Rp 350.000</td></tr>
+            <tr><td>- Subsidi Penerbitan & Cetak Fisik Buku</td><td>Rp 1.500.000</td></tr>
+            <tr><td>- Subsidi Layanan Hak Cipta / HKI (Khusus Juara 1)</td><td>Rp 800.000</td></tr>
+            <tr><td colspan="2" style="background-color: #fafafa; font-weight: bold;">2. Harapan 1, 2, dan 3</td></tr>
+            <tr><td>- Subsidi Potongan Spesial Penerbitan</td><td>Rp 350.000</td></tr>
+            <tr>
+                <td style="text-align: right;"><strong>TOTAL ANGGARAN APRESIASI PEMENANG</strong></td>
+                <td><strong>Rp 3.000.000</strong></td>
+            </tr>
+        </table>
+        <p style="font-size: 10pt; font-style: italic;">*Catatan Tambahan: Seluruh peserta akan mendapatkan fasilitas berupa E-Sertifikat Nasional, naskah tayang di web, dan Voucher Diskon Khusus penerbitan.</p>
+
+        <h3>I. Penutup</h3>
+        <p>Demikian <i>Terms of Reference</i> (TOR) ini disusun sebagai kerangka acuan dasar dalam pelaksanaan Lomba Menulis Novela Tingkat Nasional 2026. Informasi, publikasi, dan pendaftaran resmi hanya melalui portal <strong>mediatulisanmanusia.com</strong>. Kegiatan ini diharapkan dapat berjalan dengan lancar dan memberikan kontribusi nyata bagi ekosistem literasi di Indonesia.</p>
+
+        <div style="margin-top: 30px; text-align: right;">Malang, 11 Oktober 2026</div>
+        
+        <div class="signature-container">
+            <div class="signature-box">
+                Panitia Pelaksana<br>
+                <strong>Lomba Menulis Novela 2026</strong><br>
+                Ketua Pelaksana,
+                <img src="qrttd.png" alt="TTD QR Linda" class="qr-signature">
+                <span class="signature-name">Linda Antika</span>
+            </div>
+            
+            <div class="signature-box">
+                Mengetahui / Menyetujui,<br>
+                <strong>PT Media Tulisan Manusia</strong><br>
+                Penanggung Jawab,
+                <img src="qrttd.png" alt="TTD QR Sufyan" class="qr-signature">
+                <span class="signature-name">Ach. Sufyan Wahyudi</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
