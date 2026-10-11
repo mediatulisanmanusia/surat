@@ -128,6 +128,7 @@
             margin-bottom: 15px;
             background-color: #f8fafc;
             page-break-inside: avoid;
+            break-inside: avoid;
         }
         .mockup-container {
             display: flex;
@@ -135,7 +136,6 @@
             gap: 15px;
             margin-top: 15px;
             margin-bottom: 15px;
-            page-break-inside: avoid;
         }
         .mockup-item {
             flex: 1;
@@ -181,6 +181,7 @@
             gap: 20px;
             margin-top: 10px;
             page-break-inside: avoid;
+            break-inside: avoid;
         }
         .rek-box {
             flex: 1;
@@ -202,6 +203,14 @@
             border-radius: 8px;
             border: 1px dashed #999;
             page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        /* Memastikan bagian visualisasi tidak terpotong */
+        .visualisasi-wrapper {
+            page-break-inside: avoid;
+            break-inside: avoid;
+            margin-top: 15px;
         }
 
         /* Halaman Lampiran (Pamflet) */
@@ -267,7 +276,7 @@
             }
             .cover-page { padding-top: 20mm !important; padding-bottom: 20mm !important; min-height: 250mm !important;}
             .btn-print { display: none !important; }
-            .sponsor-box, .mockup-item, .logo-placeholder, .rek-box, .konfirmasi-text, th { 
+            .sponsor-box, .mockup-item, .logo-placeholder, .rek-box, .konfirmasi-text, .visualisasi-wrapper, th { 
                 -webkit-print-color-adjust: exact !important; 
                 print-color-adjust: exact !important; 
             }
@@ -348,7 +357,7 @@
             <tr><td>Sie Acara</td><td>Nurul Khodaifi</td></tr>
             <tr><td>Sie Perlengkapan</td><td>Moh. Farid Alwaridsi</td></tr>
             <tr><td>Konsumsi</td><td>Amnah Tahta Alfina</td></tr>
-            <tr><td>PDD (Publikasi & Dokumentasi)</td><td>Ervina Nur Khasanah</td></tr>
+            <tr><td>Publikasi & Dekorasi</td><td>Ervina Nur Khasanah</td></tr>
             <tr><td>Sponsorship & Medpart</td><td>Rara Ayunda Novitasari</td></tr>
         </table>
 
@@ -357,7 +366,7 @@
         <ol>
             <li><strong>Juara 1:</strong> Uang Pembinaan, Terbit, Cetak Fisik, Sertifikat, dan Hak Cipta (HKI).</li>
             <li><strong>Juara 2 & 3:</strong> Uang Pembinaan, Penerbitan Buku, Cetak Buku Fisik, dan Sertifikat.</li>
-            <li><strong>Harapan 1, 2, dan 3:</strong> Voucher Potongan Spesial Penerbitan dan Sertifikat.</li>
+            <li><strong>Harapan 1, 2, dan 3:</strong> Publikasi Karya, Voucher Potongan Spesial Penerbitan, dan Sertifikat.</li>
             <li><strong>Fasilitas Seluruh Peserta:</strong> E-Sertifikat Nasional, Naskah tayang di web, dan Voucher Diskon Khusus.</li>
         </ol>
     </div>
@@ -449,31 +458,34 @@
             </ul>
         </div>
 
-        <p style="text-align: center; font-weight: bold; font-size: 11pt; margin-bottom: 0;">VISUALISASI PENEMPATAN LOGO</p>
-        <div class="mockup-container">
-            <!-- Pamflet -->
-            <div class="mockup-item">
-                <div class="mockup-title">1. Pamflet Publikasi</div>
-                <div class="mockup-visual">
-                    <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; font-size: 8pt; color: #666;">Konten Pamflet</div>
-                    <div class="logo-placeholder">LOGO SPONSOR / MEDPART</div>
+        <!-- WRAPPER UNTUK MENCEGAH TERPOTONG SAAT PRINT -->
+        <div class="visualisasi-wrapper">
+            <p style="text-align: center; font-weight: bold; font-size: 11pt; margin-bottom: 0;">VISUALISASI PENEMPATAN LOGO</p>
+            <div class="mockup-container">
+                <!-- Pamflet -->
+                <div class="mockup-item">
+                    <div class="mockup-title">1. Pamflet Publikasi</div>
+                    <div class="mockup-visual">
+                        <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; font-size: 8pt; color: #666;">Konten Pamflet</div>
+                        <div class="logo-placeholder">LOGO SPONSOR / MEDPART</div>
+                    </div>
                 </div>
-            </div>
-            <!-- Sertifikat -->
-            <div class="mockup-item">
-                <div class="mockup-title">2. E-Sertifikat Nasional</div>
-                <div class="mockup-visual" style="flex-direction: row; align-items: flex-start; padding: 5px;">
-                    <div class="logo-placeholder" style="width: 40%; font-size: 6pt; margin: 0;">LOGO SPONSOR / MEDPART</div>
-                    <div style="flex-grow: 1; font-size: 8pt; color: #666; margin-top: 20px;">Isi Sertifikat</div>
+                <!-- Sertifikat -->
+                <div class="mockup-item">
+                    <div class="mockup-title">2. E-Sertifikat Nasional</div>
+                    <div class="mockup-visual" style="flex-direction: row; align-items: flex-start; padding: 5px;">
+                        <div class="logo-placeholder" style="width: 40%; font-size: 6pt; margin: 0;">LOGO SPONSOR / MEDPART</div>
+                        <div style="flex-grow: 1; font-size: 8pt; color: #666; margin-top: 20px;">Isi Sertifikat</div>
+                    </div>
                 </div>
-            </div>
-            <!-- Website -->
-            <div class="mockup-item">
-                <div class="mockup-title">3. Website Kegiatan</div>
-                <div class="mockup-visual" style="justify-content: flex-start;">
-                    <div style="height: 20px; background: #94a3b8; width: 100%; border-bottom: 1px solid #64748b;"></div>
-                    <div style="flex-grow: 1; padding: 5px; font-size: 8pt; color: #666;">Banner Utama Web</div>
-                    <div class="logo-placeholder">LOGO SPONSOR / MEDPART</div>
+                <!-- Website -->
+                <div class="mockup-item">
+                    <div class="mockup-title">3. Website Kegiatan</div>
+                    <div class="mockup-visual" style="justify-content: flex-start;">
+                        <div style="height: 20px; background: #94a3b8; width: 100%; border-bottom: 1px solid #64748b;"></div>
+                        <div style="flex-grow: 1; padding: 5px; font-size: 8pt; color: #666;">Banner Utama Web</div>
+                        <div class="logo-placeholder">LOGO SPONSOR / MEDPART</div>
+                    </div>
                 </div>
             </div>
         </div>
