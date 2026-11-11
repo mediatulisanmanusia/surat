@@ -34,8 +34,8 @@
 
   body { 
     font-family: "Times New Roman", Times, serif; 
-    font-size: 12pt; 
-    line-height: 1.5; 
+    font-size: 11.5pt; /* Sedikit diperkecil agar pas 1 halaman Legal */
+    line-height: 1.4; 
     margin: 0; 
     background: var(--bg-body);
     background-attachment: fixed;
@@ -44,6 +44,7 @@
     min-height: 100vh;
   }
 
+  /* Navigasi */
   .bubble-nav {
     position: fixed;
     top: 20px;
@@ -98,6 +99,7 @@
 
   .theme-switch:hover, .print-btn:hover { transform: scale(1.05); }
 
+  /* Kertas Setup */
   .kertas {
     background: var(--bg-paper);
     backdrop-filter: blur(16px);
@@ -106,11 +108,12 @@
     border-radius: 20px;
     max-width: 21cm;
     margin: 100px auto 40px auto;
-    padding: 2.5cm;
+    padding: 2cm 2.5cm;
     box-shadow: 0 10px 30px var(--glass-shadow);
     transition: background 0.3s, border 0.3s, box-shadow 0.3s;
   }
 
+  /* Kop Surat */
   .kop-surat {
     position: relative;
     display: flex;
@@ -127,83 +130,104 @@
   }
   .kop-logo img { width: 100%; height: auto; }
   .kop-text { text-align: center; width: 100%; padding: 0 100px; }
-  .kop-text h1 { margin: 0; font-size: 18pt; font-weight: bold; font-family: Arial, sans-serif; color: var(--text-main); }
-  .kop-text h2 { margin: 3px 0; font-size: 12.5pt; font-weight: bold; }
-  .kop-text p { margin: 2px 0; font-size: 9.5pt; }
+  .kop-text h1 { margin: 0; font-size: 17pt; font-weight: bold; font-family: Arial, sans-serif; color: var(--text-main); }
+  .kop-text h2 { margin: 2px 0; font-size: 12pt; font-weight: bold; }
+  .kop-text p { margin: 2px 0; font-size: 9pt; }
   
   .garis-kop {
     border: none;
-    border-top: 5px solid var(--kop-line);
+    border-top: 4px solid var(--kop-line);
     margin-top: 10px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     transition: border-color 0.3s;
   }
 
-  .judul { text-align: center; margin-bottom: 25px; }
-  .judul h3 { margin: 0; font-size: 14pt; text-decoration: underline; font-weight: bold; }
+  /* Konten Teks */
+  .judul { text-align: center; margin-bottom: 20px; }
+  .judul h3 { margin: 0; font-size: 13pt; text-decoration: underline; font-weight: bold; }
   .judul p { margin: 0; font-size: 11pt; }
   
   .isi { text-align: justify; }
-  .isi p { margin-bottom: 12px; }
+  .isi p { margin-bottom: 10px; }
 
-  .table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; margin-bottom: 20px; }
-  table.data-pemenang { width: 100%; border-collapse: collapse; font-size: 11pt; }
-  table.data-pemenang th, table.data-pemenang td { border: 1px solid var(--border-color); padding: 8px; text-align: left; vertical-align: middle; }
+  /* Tabel */
+  .table-responsive { width: 100%; overflow-x: auto; margin-top: 10px; margin-bottom: 15px; }
+  table.data-pemenang { width: 100%; border-collapse: collapse; font-size: 10.5pt; }
+  table.data-pemenang th, table.data-pemenang td { border: 1px solid var(--border-color); padding: 6px; text-align: left; vertical-align: middle; }
   table.data-pemenang th { background-color: rgba(128, 128, 128, 0.15); text-align: center; font-weight: bold; }
   td.center { text-align: center; }
 
+  /* Keterangan Box */
   .keterangan-box {
     border: 1px solid var(--border-color);
-    padding: 15px;
-    margin-top: 20px;
+    padding: 10px 15px;
+    margin-top: 15px;
     background-color: rgba(128, 128, 128, 0.05);
   }
-  .keterangan-box h4 { margin: 0 0 10px 0; font-size: 12pt; text-decoration: underline; font-weight: bold;}
-  .keterangan-box ol { margin: 0; padding-left: 20px; }
-  .keterangan-box li { margin-bottom: 5px; }
+  .keterangan-box h4 { margin: 0 0 8px 0; font-size: 11pt; text-decoration: underline; font-weight: bold;}
+  .keterangan-box ol { margin: 0; padding-left: 20px; font-size: 10.5pt;}
+  .keterangan-box li { margin-bottom: 4px; }
 
-  /* Penyesuaian Tanda Tangan */
-  .ttd-box { width: 100%; margin-top: 40px; display: flex; justify-content: space-between; }
-  .ttd-kiri, .ttd-kanan { width: 45%; text-align: left; }
-  .ttd-img { height: 70px; display: block; margin: 5px 0; }
+  /* Tanda Tangan Menyamping */
+  .ttd-box { 
+    width: 100%; 
+    margin-top: 25px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-end; 
+    page-break-inside: avoid; /* Mencegah TTD terpotong ke halaman baru */
+  }
+  .ttd-kiri, .ttd-kanan { 
+    width: 45%; 
+    text-align: center; 
+  }
+  .ttd-img { height: 75px; display: block; margin: 2px auto; }
+  .ttd-text { margin: 0; }
 
   .copyright { text-align: center; font-size: 10px; font-family: sans-serif; color: #cccccc; padding: 20px; margin-bottom: 20px; }
 
+  /* Responsif Layar Kecil */
   @media (max-width: 768px) {
     .bubble-nav { width: 85%; padding: 6px 15px; top: 15px; flex-wrap: wrap; }
     .kertas { margin: 90px 15px 20px 15px; padding: 20px; border-radius: 15px; }
     .kop-surat { flex-direction: column; }
     .kop-logo { position: static; transform: none; width: 70px; margin: 0 auto 10px auto; }
     .kop-text { padding: 0; }
-    .kop-text h1 { font-size: 14pt; }
-    .kop-text h2 { font-size: 11pt; }
     
-    /* Tanda tangan di layar kecil menjadi bertumpuk */
-    .ttd-box { flex-direction: column; align-items: flex-end; gap: 30px; }
-    .ttd-kiri, .ttd-kanan { width: 100%; text-align: right; }
-    .ttd-img { margin-left: auto; margin-right: 0; }
-    
-    body { font-size: 11pt; }
+    /* Tanda tangan di layar HP tetap diusahakan sejajar atau bertumpuk rapi */
+    .ttd-box { flex-direction: column; gap: 20px; align-items: center; }
+    .ttd-kiri, .ttd-kanan { width: 100%; }
+  }
+
+  /* Pengaturan Khusus Print ke PDF Legal */
+  @page {
+    size: legal; /* Mengunci ukuran kertas Legal (8.5 x 14 inch) */
+    margin: 15mm; /* Margin tipis agar muat banyak */
   }
 
   @media print {
-    body { background: white; color: black; }
+    body { background: white; color: black; font-size: 11pt; }
     .bubble-nav, .copyright { display: none; }
     .kertas { 
       margin: 0; padding: 0; box-shadow: none; max-width: 100%; 
       background: white; border: none; border-radius: 0; 
       backdrop-filter: none; -webkit-backdrop-filter: none;
     }
-    .garis-kop { border-top: 5px solid black; }
-    table.data-pemenang th { background-color: #f2f2f2; border-color: black; }
+    .garis-kop { border-top: 4px solid black; }
+    table.data-pemenang th { background-color: #f2f2f2 !important; border-color: black; -webkit-print-color-adjust: exact; }
     table.data-pemenang td, .keterangan-box { border-color: black; }
     .keterangan-box { background-color: transparent; }
+    
+    /* Memaksa TTD tetap sejajar saat di-print */
+    .ttd-box { display: flex !important; flex-direction: row !important; justify-content: space-between !important; }
+    .ttd-kiri, .ttd-kanan { width: 45% !important; float: none !important; }
   }
 </style>
 </head>
 <body>
 
 <div class="bubble-nav">
+  <!-- Ubah ke logopt2.webp -->
   <img id="logo-nav" src="logopt2.webp" alt="Logo PT Media Tulisan Manusia">
   <div class="nav-buttons">
     <button class="theme-switch" id="btn-theme" title="Ubah Mode">🌙</button>
@@ -215,7 +239,8 @@
   
   <div class="kop-surat">
     <div class="kop-logo">
-      <img src="logopt.webp" alt="Logo MTM">
+      <!-- Menggunakan logopt2.webp -->
+      <img src="logopt2.webp" alt="Logo MTM">
     </div>
     <div class="kop-text">
       <h1>PT MEDIA TULISAN MANUSIA</h1>
@@ -269,19 +294,20 @@
       </ol>
     </div>
 
-    <p style="margin-top: 20px;">Demikian Surat Keputusan ini dibuat dan ditetapkan untuk diketahui serta dipergunakan sebagaimana mestinya.</p>
+    <p style="margin-top: 15px;">Demikian Surat Keputusan ini dibuat dan ditetapkan untuk diketahui serta dipergunakan sebagaimana mestinya.</p>
   </div>
 
+  <!-- TANDA TANGAN -->
   <div class="ttd-box">
     <div class="ttd-kiri">
-      <p><br><br><br><strong>Panitia Lomba Menulis Novela,</strong><br>Ketua Pelaksana</p>
+      <p class="ttd-text"><br><br><strong>Panitia Lomba Menulis Novela,</strong><br>Ketua Pelaksana</p>
       <img src="ttdlomba.png" alt="Tanda Tangan Ketua Pelaksana" class="ttd-img">
-      <p><strong><u>Nurul Khodaifi, M.M</u></strong></p>
+      <p class="ttd-text"><strong><u>Nurul Khodaifi, M.M</u></strong></p>
     </div>
     <div class="ttd-kanan">
-      <p>Ditetapkan di: Malang<br>Pada Tanggal: 17 November 2026<br><br><strong>PT Media Tulisan Manusia</strong></p>
+      <p class="ttd-text">Ditetapkan di: Malang<br>Pada Tanggal: 17 November 2026<br><br><strong>PT Media Tulisan Manusia</strong></p>
       <img src="ttdlomba.png" alt="Tanda Tangan CEO" class="ttd-img">
-      <p><strong><u>Ach. Sufyan Wahyudi, M.Pd., C.Ed</u></strong><br>Chief Executive Officer</p>
+      <p class="ttd-text"><strong><u>Ach. Sufyan Wahyudi, S.Pd., M.Pd., C.Ed</u></strong><br>Chief Executive Officer</p>
     </div>
   </div>
 
