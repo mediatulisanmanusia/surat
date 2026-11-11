@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK Pemenang Lomba Novela 2026 - PT MEDIA TULISAN MANUSIA</title>
+<!-- Favicon -->
+<link rel="icon" type="image/webp" href="logopt1.webp">
+
+<style>
+  :root {
+    --bg-body: linear-gradient(135deg, #002147, #001229); 
+    --bg-paper: rgba(255, 255, 255, 0.95); 
+    --paper-border: rgba(255, 255, 255, 0.4);
+    --text-main: #000000;
+    --border-color: #000000;
+    --kop-line: #002147; 
+    --glass-nav-bg: rgba(255, 255, 255, 0.85);
+    --glass-nav-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+  }
+
+  body.dark-mode {
+    --bg-body: linear-gradient(135deg, #1B1B1B, #2a2a2a); 
+    --bg-paper: rgba(40, 40, 40, 0.85);
+    --paper-border: rgba(255, 255, 255, 0.1);
+    --text-main: #e0e0e0;
+    --border-color: #e0e0e0;
+    --kop-line: #e0e0e0;
+    --glass-nav-bg: rgba(30, 30, 30, 0.8);
+    --glass-nav-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.5);
+  }
+
+  body { 
+    font-family: "Times New Roman", Times, serif; 
+    font-size: 12pt; 
+    line-height: 1.5; 
+    margin: 0; 
+    background: var(--bg-body);
+    background-attachment: fixed;
+    color: var(--text-main);
+    transition: background 0.3s, color 0.3s;
+    min-height: 100vh;
+  }
+
+  .bubble-nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    background: var(--glass-nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-nav-border);
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px;
+    box-shadow: 0 4px 15px var(--glass-shadow);
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+
+  .bubble-nav img { height: 35px; width: auto; }
+  
+  .nav-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .theme-switch, .print-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px 10px;
+    outline: none;
+    transition: transform 0.2s;
+    border-radius: 20px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .print-btn {
+    background-color: #d97706;
+    color: white;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .theme-switch:hover, .print-btn:hover { transform: scale(1.05); }
+
+  .kertas {
+    background: var(--bg-paper);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--paper-border);
+    border-radius: 20px;
+    max-width: 21cm;
+    margin: 100px auto 40px auto;
+    padding: 2.5cm;
+    box-shadow: 0 10px 30px var(--glass-shadow);
+    transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+  }
+
+  .kop-surat {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
+  .kop-logo {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 90px;
+  }
+  .kop-logo img { width: 100%; height: auto; }
+  .kop-text { text-align: center; width: 100%; padding: 0 100px; }
+  .kop-text h1 { margin: 0; font-size: 18pt; font-weight: bold; font-family: Arial, sans-serif; color: var(--text-main); }
+  .kop-text h2 { margin: 3px 0; font-size: 12.5pt; font-weight: bold; }
+  .kop-text p { margin: 2px 0; font-size: 9.5pt; }
+  
+  .garis-kop {
+    border: none;
+    border-top: 5px solid var(--kop-line);
+    margin-top: 10px;
+    margin-bottom: 25px;
+    transition: border-color 0.3s;
+  }
+
+  .judul { text-align: center; margin-bottom: 25px; }
+  .judul h3 { margin: 0; font-size: 14pt; text-decoration: underline; font-weight: bold; }
+  .judul p { margin: 0; font-size: 11pt; }
+  
+  .isi { text-align: justify; }
+  .isi p { margin-bottom: 12px; }
+
+  .table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; margin-bottom: 20px; }
+  table.data-pemenang { width: 100%; border-collapse: collapse; font-size: 11pt; }
+  table.data-pemenang th, table.data-pemenang td { border: 1px solid var(--border-color); padding: 8px; text-align: left; vertical-align: middle; }
+  table.data-pemenang th { background-color: rgba(128, 128, 128, 0.15); text-align: center; font-weight: bold; }
+  td.center { text-align: center; }
+
+  .keterangan-box {
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    margin-top: 20px;
+    background-color: rgba(128, 128, 128, 0.05);
+  }
+  .keterangan-box h4 { margin: 0 0 10px 0; font-size: 12pt; text-decoration: underline; font-weight: bold;}
+  .keterangan-box ol { margin: 0; padding-left: 20px; }
+  .keterangan-box li { margin-bottom: 5px; }
+
+  /* Penyesuaian Tanda Tangan */
+  .ttd-box { width: 100%; margin-top: 40px; display: flex; justify-content: space-between; }
+  .ttd-kiri, .ttd-kanan { width: 45%; text-align: left; }
+  .ttd-img { height: 70px; display: block; margin: 5px 0; }
+
+  .copyright { text-align: center; font-size: 10px; font-family: sans-serif; color: #cccccc; padding: 20px; margin-bottom: 20px; }
+
+  @media (max-width: 768px) {
+    .bubble-nav { width: 85%; padding: 6px 15px; top: 15px; flex-wrap: wrap; }
+    .kertas { margin: 90px 15px 20px 15px; padding: 20px; border-radius: 15px; }
+    .kop-surat { flex-direction: column; }
+    .kop-logo { position: static; transform: none; width: 70px; margin: 0 auto 10px auto; }
+    .kop-text { padding: 0; }
+    .kop-text h1 { font-size: 14pt; }
+    .kop-text h2 { font-size: 11pt; }
+    
+    /* Tanda tangan di layar kecil menjadi bertumpuk */
+    .ttd-box { flex-direction: column; align-items: flex-end; gap: 30px; }
+    .ttd-kiri, .ttd-kanan { width: 100%; text-align: right; }
+    .ttd-img { margin-left: auto; margin-right: 0; }
+    
+    body { font-size: 11pt; }
+  }
+
+  @media print {
+    body { background: white; color: black; }
+    .bubble-nav, .copyright { display: none; }
+    .kertas { 
+      margin: 0; padding: 0; box-shadow: none; max-width: 100%; 
+      background: white; border: none; border-radius: 0; 
+      backdrop-filter: none; -webkit-backdrop-filter: none;
+    }
+    .garis-kop { border-top: 5px solid black; }
+    table.data-pemenang th { background-color: #f2f2f2; border-color: black; }
+    table.data-pemenang td, .keterangan-box { border-color: black; }
+    .keterangan-box { background-color: transparent; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bubble-nav">
+  <img id="logo-nav" src="logopt2.webp" alt="Logo PT Media Tulisan Manusia">
+  <div class="nav-buttons">
+    <button class="theme-switch" id="btn-theme" title="Ubah Mode">🌙</button>
+    <button class="print-btn" onclick="window.print()" title="Unduh / Cetak PDF">📄 Unduh PDF</button>
+  </div>
+</div>
+
+<div class="kertas">
+  
+  <div class="kop-surat">
+    <div class="kop-logo">
+      <img src="logopt.webp" alt="Logo MTM">
+    </div>
+    <div class="kop-text">
+      <h1>PT MEDIA TULISAN MANUSIA</h1>
+      <h2>Penerbit & Konsultan Hak Cipta</h2>
+      <p>Virtual Office: Jl. Raya Sukorejo No. 101, Pasuruan | Jl. S. Supriyadi No. 48, Malang</p>
+      <p>email: ptmediatulisanmanusia@gmail.com | website: www.mediatulisanmanusia.com</p>
+    </div>
+  </div>
+  <hr class="garis-kop">
+
+  <div class="judul">
+    <h3>SURAT KEPUTUSAN PENETAPAN PEMENANG</h3>
+    <p>Nomor: 058/SK-PEMENANG/MTM/XI/2026</p>
+  </div>
+
+  <div class="isi">
+    <p>Berdasarkan hasil penilaian akhir, kurasi naskah, dan sidang pleno Dewan Juri Lomba Menulis Novela Nasional 2026 yang diselenggarakan oleh PT Media Tulisan Manusia pada tanggal 6 hingga 9 November 2026, maka dengan ini <strong>memutuskan dan menetapkan</strong> nama-nama yang tercantum di bawah ini sebagai pemenang resmi:</p>
+
+    <div class="table-responsive">
+      <table class="data-pemenang">
+        <thead>
+          <tr>
+            <th style="width: 5%;">No.</th>
+            <th style="width: 25%;">Nama Penulis</th>
+            <th style="width: 40%;">Judul Karya Novela</th>
+            <th style="width: 15%;">Kategori Juara</th>
+            <th style="width: 15%;">Skor Akhir</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="center">1</td><td>Ahmad Anhar Musadad</td><td><em>jalan tulis perjalanan</em></td><td class="center"><strong>Juara I</strong></td><td class="center">81.7</td></tr>
+          <tr><td class="center">2</td><td>Vanessa Chelsea Bareta</td><td><em>15 Menit Sebelum Pulang</em></td><td class="center"><strong>Juara II</strong></td><td class="center">80.0</td></tr>
+          <tr><td class="center">3</td><td>Choirun Nisa & Janeeta Shine A.</td><td><em>What Happened to Us?</em></td><td class="center"><strong>Juara III</strong></td><td class="center">78.3</td></tr>
+          <tr><td class="center">4</td><td>Jazilatul Rohmah</td><td><em>Potret Tiga Sahabat di Pesantren</em></td><td class="center">Harapan I</td><td class="center">71.7</td></tr>
+          <tr><td class="center">5</td><td>Noer Kholis</td><td><em>Surga di Rahim Pendosa</em></td><td class="center">Harapan II</td><td class="center">70.0</td></tr>
+          <tr><td class="center">6</td><td>Dara Michel patriska</td><td><em>Maaf, aku terlambat</em></td><td class="center">Harapan III</td><td class="center">68.3</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="keterangan-box">
+      <h4>Keterangan Tambahan Hak dan Apresiasi Pemenang (TOTAL HADIAH: RP. 3.000.000):</h4>
+      <ol>
+        <li><strong>Juara I</strong> berhak mendapatkan: Uang Pembinaan, Penerbitan Buku, Cetak Buku Fisik, Hak Cipta Karya, dan Sertifikat Penulis.</li>
+        <li><strong>Juara II</strong> berhak mendapatkan: Uang Pembinaan, Penerbitan Buku, Cetak Buku Fisik, dan Sertifikat Penulis.</li>
+        <li><strong>Juara III</strong> berhak mendapatkan: Penerbitan Buku, Cetak Buku Fisik, dan Sertifikat Penulis.</li>
+        <li><strong>Harapan I, II, dan III</strong> masing-masing berhak mendapatkan: Penerbitan dan Sertifikat.</li>
+        <li><strong>Benefit Seluruh Peserta:</strong> E-Sertifikat, Publikasi Karya, dan Voucer Diskon.</li>
+        <li>Keputusan Dewan Juri bersifat mutlak, mengikat, dan tidak dapat diganggu gugat.</li>
+        <li>Proses klaim hadiah, serah terima sertifikat, serta tindak lanjut penggunaan fasilitas penerbitan akan diinformasikan secara langsung oleh panitia melalui kontak resmi yang telah didaftarkan.</li>
+      </ol>
+    </div>
+
+    <p style="margin-top: 20px;">Demikian Surat Keputusan ini dibuat dan ditetapkan untuk diketahui serta dipergunakan sebagaimana mestinya.</p>
+  </div>
+
+  <div class="ttd-box">
+    <div class="ttd-kiri">
+      <p><br><br><br><strong>Panitia Lomba Menulis Novela,</strong><br>Ketua Pelaksana</p>
+      <img src="ttdlomba.png" alt="Tanda Tangan Ketua Pelaksana" class="ttd-img">
+      <p><strong><u>Nurul Khodaifi, M.M</u></strong></p>
+    </div>
+    <div class="ttd-kanan">
+      <p>Ditetapkan di: Malang<br>Pada Tanggal: 17 November 2026<br><br><strong>PT Media Tulisan Manusia</strong></p>
+      <img src="ttdlomba.png" alt="Tanda Tangan CEO" class="ttd-img">
+      <p><strong><u>Ach. Sufyan Wahyudi, S.Pd., M.Pd., C.Ed</u></strong><br>Chief Executive Officer</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="copyright">
+  &copy; 2026 PT MEDIA TULISAN MANUSIA
+</div>
+
+<script>
+  const btnTheme = document.getElementById('btn-theme');
+  const body = document.body;
+  const logoNav = document.getElementById('logo-nav');
+
+  btnTheme.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    
+    if (body.classList.contains('dark-mode')) {
+      logoNav.src = 'logopt3.webp'; 
+      btnTheme.textContent = '☀️';
+    } else {
+      logoNav.src = 'logopt2.webp'; 
+      btnTheme.textContent = '🌙';
+    }
+  });
+</script>
+</body>
+</html>
