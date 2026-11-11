@@ -10,7 +10,7 @@
 <style>
   :root {
     --bg-body: linear-gradient(135deg, #002147, #001229); 
-    --bg-paper: rgba(255, 255, 255, 0.95); 
+    --bg-paper: rgba(255, 255, 255, 0.96); 
     --paper-border: rgba(255, 255, 255, 0.4);
     --text-main: #000000;
     --border-color: #000000;
@@ -22,7 +22,7 @@
 
   body.dark-mode {
     --bg-body: linear-gradient(135deg, #1B1B1B, #2a2a2a); 
-    --bg-paper: rgba(40, 40, 40, 0.85);
+    --bg-paper: rgba(40, 40, 40, 0.9);
     --paper-border: rgba(255, 255, 255, 0.1);
     --text-main: #e0e0e0;
     --border-color: #e0e0e0;
@@ -32,10 +32,14 @@
     --glass-shadow: rgba(0, 0, 0, 0.5);
   }
 
+  * {
+    box-sizing: border-box;
+  }
+
   body { 
     font-family: "Times New Roman", Times, serif; 
-    font-size: 11.5pt; /* Sedikit diperkecil agar pas 1 halaman Legal */
-    line-height: 1.4; 
+    font-size: 11.5pt; 
+    line-height: 1.45; 
     margin: 0; 
     background: var(--bg-body);
     background-attachment: fixed;
@@ -44,7 +48,7 @@
     min-height: 100vh;
   }
 
-  /* Navigasi */
+  /* Navigasi Gelembung Kaca */
   .bubble-nav {
     position: fixed;
     top: 20px;
@@ -79,7 +83,7 @@
     border: none;
     font-size: 18px;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 6px 12px;
     outline: none;
     transition: transform 0.2s;
     border-radius: 20px;
@@ -93,141 +97,265 @@
   .print-btn {
     background-color: #d97706;
     color: white;
-    font-size: 14px;
+    font-size: 13.5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   }
 
   .theme-switch:hover, .print-btn:hover { transform: scale(1.05); }
 
-  /* Kertas Setup */
+  /* Kertas Surat */
   .kertas {
     background: var(--bg-paper);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--paper-border);
     border-radius: 20px;
-    max-width: 21cm;
-    margin: 100px auto 40px auto;
-    padding: 2cm 2.5cm;
+    max-width: 21.5cm;
+    margin: 95px auto 40px auto;
+    padding: 1.8cm 2.2cm;
     box-shadow: 0 10px 30px var(--glass-shadow);
     transition: background 0.3s, border 0.3s, box-shadow 0.3s;
   }
 
-  /* Kop Surat */
+  /* KOP SURAT RESMI PRESISI (Logo Persegi di Kiri, Teks di Tengah) */
   .kop-surat {
-    position: relative;
-    display: flex;
+    display: grid;
+    grid-template-columns: 95px 1fr 95px;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 5px;
+    width: 100%;
+    margin-bottom: 8px;
   }
   .kop-logo {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 90px;
+    width: 85px;
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
-  .kop-logo img { width: 100%; height: auto; }
-  .kop-text { text-align: center; width: 100%; padding: 0 100px; }
-  .kop-text h1 { margin: 0; font-size: 17pt; font-weight: bold; font-family: Arial, sans-serif; color: var(--text-main); }
-  .kop-text h2 { margin: 2px 0; font-size: 12pt; font-weight: bold; }
-  .kop-text p { margin: 2px 0; font-size: 9pt; }
+  .kop-logo img { 
+    width: 85px; 
+    height: 85px; 
+    object-fit: contain; 
+  }
+  .kop-text { 
+    text-align: center; 
+    width: 100%; 
+  }
+  .kop-text h1 { 
+    margin: 0; 
+    font-size: 17.5pt; 
+    font-weight: bold; 
+    font-family: Arial, Helvetica, sans-serif; 
+    letter-spacing: 0.5px;
+    color: var(--text-main); 
+  }
+  .kop-text h2 { 
+    margin: 2px 0 4px 0; 
+    font-size: 12pt; 
+    font-weight: bold; 
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .kop-text p { 
+    margin: 1px 0; 
+    font-size: 9pt; 
+    line-height: 1.3;
+  }
   
+  /* Garis Ganda Kop Surat Resmi */
   .garis-kop {
     border: none;
-    border-top: 4px solid var(--kop-line);
-    margin-top: 10px;
-    margin-bottom: 20px;
+    border-top: 3.5px solid var(--kop-line);
+    border-bottom: 1px solid var(--kop-line);
+    height: 2px;
+    margin-top: 6px;
+    margin-bottom: 18px;
     transition: border-color 0.3s;
   }
 
-  /* Konten Teks */
-  .judul { text-align: center; margin-bottom: 20px; }
-  .judul h3 { margin: 0; font-size: 13pt; text-decoration: underline; font-weight: bold; }
-  .judul p { margin: 0; font-size: 11pt; }
+  /* Judul & Isi Surat */
+  .judul { text-align: center; margin-bottom: 16px; }
+  .judul h3 { margin: 0; font-size: 13pt; text-decoration: underline; font-weight: bold; letter-spacing: 0.3px; }
+  .judul p { margin: 2px 0 0 0; font-size: 11pt; }
   
   .isi { text-align: justify; }
-  .isi p { margin-bottom: 10px; }
+  .isi p { margin: 0 0 10px 0; }
 
-  /* Tabel */
-  .table-responsive { width: 100%; overflow-x: auto; margin-top: 10px; margin-bottom: 15px; }
+  /* Tabel Pemenang */
+  .table-responsive { width: 100%; overflow-x: auto; margin: 12px 0; }
   table.data-pemenang { width: 100%; border-collapse: collapse; font-size: 10.5pt; }
-  table.data-pemenang th, table.data-pemenang td { border: 1px solid var(--border-color); padding: 6px; text-align: left; vertical-align: middle; }
-  table.data-pemenang th { background-color: rgba(128, 128, 128, 0.15); text-align: center; font-weight: bold; }
+  table.data-pemenang th, table.data-pemenang td { 
+    border: 1px solid var(--border-color); 
+    padding: 6px 8px; 
+    text-align: left; 
+    vertical-align: middle; 
+  }
+  table.data-pemenang th { 
+    background-color: rgba(128, 128, 128, 0.15); 
+    text-align: center; 
+    font-weight: bold; 
+  }
   td.center { text-align: center; }
 
-  /* Keterangan Box */
+  /* Kotak Keterangan */
   .keterangan-box {
     border: 1px solid var(--border-color);
-    padding: 10px 15px;
-    margin-top: 15px;
-    background-color: rgba(128, 128, 128, 0.05);
+    padding: 10px 14px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    background-color: rgba(128, 128, 128, 0.04);
   }
-  .keterangan-box h4 { margin: 0 0 8px 0; font-size: 11pt; text-decoration: underline; font-weight: bold;}
-  .keterangan-box ol { margin: 0; padding-left: 20px; font-size: 10.5pt;}
-  .keterangan-box li { margin-bottom: 4px; }
+  .keterangan-box h4 { margin: 0 0 6px 0; font-size: 10.5pt; text-decoration: underline; font-weight: bold; }
+  .keterangan-box ol { margin: 0; padding-left: 18px; font-size: 10pt; line-height: 1.4; }
+  .keterangan-box li { margin-bottom: 3px; }
 
-  /* Tanda Tangan Menyamping */
+  /* Blok Tanda Tangan Presisi Sejajar */
+  .ttd-wrapper {
+    width: 100%;
+    margin-top: 16px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .ttd-tanggal {
+    width: 45%;
+    margin-left: auto;
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 11pt;
+    line-height: 1.35;
+  }
   .ttd-box { 
     width: 100%; 
-    margin-top: 25px; 
     display: flex; 
     justify-content: space-between; 
-    align-items: flex-end; 
-    page-break-inside: avoid; /* Mencegah TTD terpotong ke halaman baru */
+    align-items: stretch; 
   }
-  .ttd-kiri, .ttd-kanan { 
+  .ttd-kolom { 
     width: 45%; 
-    text-align: center; 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
-  .ttd-img { height: 75px; display: block; margin: 2px auto; }
-  .ttd-text { margin: 0; }
+  .ttd-jabatan {
+    margin: 0;
+    font-size: 11pt;
+    line-height: 1.35;
+    min-height: 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .ttd-img { 
+    height: 75px; 
+    width: auto;
+    display: block; 
+    margin: 6px auto; 
+  }
+  .ttd-nama { 
+    margin: 0; 
+    font-size: 11pt;
+    line-height: 1.35;
+  }
 
   .copyright { text-align: center; font-size: 10px; font-family: sans-serif; color: #cccccc; padding: 20px; margin-bottom: 20px; }
 
-  /* Responsif Layar Kecil */
-  @media (max-width: 768px) {
-    .bubble-nav { width: 85%; padding: 6px 15px; top: 15px; flex-wrap: wrap; }
-    .kertas { margin: 90px 15px 20px 15px; padding: 20px; border-radius: 15px; }
-    .kop-surat { flex-direction: column; }
-    .kop-logo { position: static; transform: none; width: 70px; margin: 0 auto 10px auto; }
-    .kop-text { padding: 0; }
-    
-    /* Tanda tangan di layar HP tetap diusahakan sejajar atau bertumpuk rapi */
-    .ttd-box { flex-direction: column; gap: 20px; align-items: center; }
-    .ttd-kiri, .ttd-kanan { width: 100%; }
+  /* Responsif KHUSUS Layar HP (Tidak mengganggu saat Print/Unduh PDF) */
+  @media screen and (max-width: 768px) {
+    .bubble-nav { width: 90%; padding: 6px 15px; top: 15px; }
+    .kertas { margin: 85px 12px 20px 12px; padding: 20px 15px; border-radius: 15px; }
+    .kop-surat { grid-template-columns: 65px 1fr; gap: 10px; }
+    .kop-spacer { display: none; }
+    .kop-logo, .kop-logo img { width: 65px; height: 65px; }
+    .kop-text { text-align: left; }
+    .kop-text h1 { font-size: 13pt; }
+    .kop-text h2 { font-size: 10pt; }
+    .kop-text p { font-size: 8pt; }
+    .ttd-tanggal { width: 100%; margin-bottom: 12px; }
+    .ttd-box { flex-direction: row; gap: 10px; }
+    .ttd-kolom { width: 48%; }
+    .ttd-jabatan, .ttd-nama, .ttd-tanggal { font-size: 9.5pt; }
+    .ttd-img { height: 60px; }
+    body { font-size: 10.5pt; }
   }
 
-  /* Pengaturan Khusus Print ke PDF Legal */
+  /* PENGATURAN CETAK / UNDUH PDF 1 LEMBAR LEGAL PRESISI */
   @page {
-    size: legal; /* Mengunci ukuran kertas Legal (8.5 x 14 inch) */
-    margin: 15mm; /* Margin tipis agar muat banyak */
+    size: legal portrait;
+    margin: 12mm 16mm;
   }
 
   @media print {
-    body { background: white; color: black; font-size: 11pt; }
-    .bubble-nav, .copyright { display: none; }
-    .kertas { 
-      margin: 0; padding: 0; box-shadow: none; max-width: 100%; 
-      background: white; border: none; border-radius: 0; 
-      backdrop-filter: none; -webkit-backdrop-filter: none;
+    html, body { 
+      background: #ffffff !important; 
+      color: #000000 !important; 
+      font-size: 11pt;
+      height: auto !important;
+      min-height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: visible !important;
     }
-    .garis-kop { border-top: 4px solid black; }
-    table.data-pemenang th { background-color: #f2f2f2 !important; border-color: black; -webkit-print-color-adjust: exact; }
-    table.data-pemenang td, .keterangan-box { border-color: black; }
-    .keterangan-box { background-color: transparent; }
-    
-    /* Memaksa TTD tetap sejajar saat di-print */
-    .ttd-box { display: flex !important; flex-direction: row !important; justify-content: space-between !important; }
-    .ttd-kiri, .ttd-kanan { width: 45% !important; float: none !important; }
+    .bubble-nav, .copyright { 
+      display: none !important; 
+    }
+    .kertas { 
+      margin: 0 !important; 
+      padding: 0 !important; 
+      box-shadow: none !important; 
+      max-width: 100% !important; 
+      width: 100% !important;
+      background: #ffffff !important; 
+      border: none !important; 
+      border-radius: 0 !important; 
+      backdrop-filter: none !important; 
+      -webkit-backdrop-filter: none !important;
+      page-break-after: avoid !important;
+      break-after: avoid !important;
+    }
+    .kop-surat {
+      display: grid !important;
+      grid-template-columns: 90px 1fr 90px !important;
+      align-items: center !important;
+    }
+    .kop-spacer { display: block !important; }
+    .kop-logo, .kop-logo img {
+      width: 85px !important;
+      height: 85px !important;
+    }
+    .kop-text {
+      text-align: center !important;
+    }
+    .garis-kop { 
+      border-top: 3.5px solid #000000 !important; 
+      border-bottom: 1px solid #000000 !important; 
+    }
+    table.data-pemenang th { 
+      background-color: #f0f0f0 !important; 
+      border-color: #000000 !important; 
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact;
+    }
+    table.data-pemenang td, .keterangan-box { 
+      border-color: #000000 !important; 
+    }
+    .keterangan-box { 
+      background-color: transparent !important; 
+    }
+    .ttd-box { 
+      display: flex !important; 
+      flex-direction: row !important; 
+      justify-content: space-between !important; 
+    }
+    .ttd-kolom { 
+      width: 45% !important; 
+    }
   }
 </style>
 </head>
 <body>
 
 <div class="bubble-nav">
-  <!-- Ubah ke logopt2.webp -->
   <img id="logo-nav" src="logopt2.webp" alt="Logo PT Media Tulisan Manusia">
   <div class="nav-buttons">
     <button class="theme-switch" id="btn-theme" title="Ubah Mode">🌙</button>
@@ -237,17 +365,18 @@
 
 <div class="kertas">
   
+  <!-- KOP SURAT RESMI -->
   <div class="kop-surat">
     <div class="kop-logo">
-      <!-- Menggunakan logopt2.webp -->
-      <img src="logopt2.webp" alt="Logo MTM">
+      <img src="logopt.webp" alt="Logo MTM">
     </div>
     <div class="kop-text">
       <h1>PT MEDIA TULISAN MANUSIA</h1>
-      <h2>Penerbit & Konsultan Hak Cipta</h2>
+      <h2>Penerbit &amp; Konsultan Hak Cipta</h2>
       <p>Virtual Office: Jl. Raya Sukorejo No. 101, Pasuruan | Jl. S. Supriyadi No. 48, Malang</p>
-      <p>email: ptmediatulisanmanusia@gmail.com | website: www.mediatulisanmanusia.com</p>
+      <p>Email: ptmediatulisanmanusia@gmail.com | Website: www.mediatulisanmanusia.com</p>
     </div>
+    <div class="kop-spacer"></div>
   </div>
   <hr class="garis-kop">
 
@@ -263,20 +392,20 @@
       <table class="data-pemenang">
         <thead>
           <tr>
-            <th style="width: 5%;">No.</th>
-            <th style="width: 25%;">Nama Penulis</th>
-            <th style="width: 40%;">Judul Karya Novela</th>
-            <th style="width: 15%;">Kategori Juara</th>
-            <th style="width: 15%;">Skor Akhir</th>
+            <th style="width: 6%;">No.</th>
+            <th style="width: 27%;">Nama Penulis</th>
+            <th style="width: 37%;">Judul Karya Novela</th>
+            <th style="width: 16%;">Kategori Juara</th>
+            <th style="width: 14%;">Skor Akhir</th>
           </tr>
         </thead>
         <tbody>
           <tr><td class="center">1</td><td>Ahmad Anhar Musadad</td><td><em>jalan tulis perjalanan</em></td><td class="center"><strong>Juara I</strong></td><td class="center">81.7</td></tr>
           <tr><td class="center">2</td><td>Vanessa Chelsea Bareta</td><td><em>15 Menit Sebelum Pulang</em></td><td class="center"><strong>Juara II</strong></td><td class="center">80.0</td></tr>
-          <tr><td class="center">3</td><td>Choirun Nisa & Janeeta Shine A.</td><td><em>What Happened to Us?</em></td><td class="center"><strong>Juara III</strong></td><td class="center">78.3</td></tr>
+          <tr><td class="center">3</td><td>Choirun Nisa &amp; Janeeta Shine A.</td><td><em>What Happened to Us?</em></td><td class="center"><strong>Juara III</strong></td><td class="center">78.3</td></tr>
           <tr><td class="center">4</td><td>Jazilatul Rohmah</td><td><em>Potret Tiga Sahabat di Pesantren</em></td><td class="center">Harapan I</td><td class="center">71.7</td></tr>
           <tr><td class="center">5</td><td>Noer Kholis</td><td><em>Surga di Rahim Pendosa</em></td><td class="center">Harapan II</td><td class="center">70.0</td></tr>
-          <tr><td class="center">6</td><td>Dara Michel patriska</td><td><em>Maaf, aku terlambat</em></td><td class="center">Harapan III</td><td class="center">68.3</td></tr>
+          <tr><td class="center">6</td><td>Dara Michel Patriska</td><td><em>Maaf, aku terlambat</em></td><td class="center">Harapan III</td><td class="center">68.3</td></tr>
         </tbody>
       </table>
     </div>
@@ -294,20 +423,38 @@
       </ol>
     </div>
 
-    <p style="margin-top: 15px;">Demikian Surat Keputusan ini dibuat dan ditetapkan untuk diketahui serta dipergunakan sebagaimana mestinya.</p>
+    <p>Demikian Surat Keputusan ini dibuat dan ditetapkan untuk diketahui serta dipergunakan sebagaimana mestinya.</p>
   </div>
 
-  <!-- TANDA TANGAN -->
-  <div class="ttd-box">
-    <div class="ttd-kiri">
-      <p class="ttd-text"><br><br><strong>Panitia Lomba Menulis Novela,</strong><br>Ketua Pelaksana</p>
-      <img src="ttdlomba.png" alt="Tanda Tangan Ketua Pelaksana" class="ttd-img">
-      <p class="ttd-text"><strong><u>Nurul Khodaifi, M.M</u></strong></p>
+  <!-- TANDA TANGAN PRESISI SEJAJAR -->
+  <div class="ttd-wrapper">
+    <div class="ttd-tanggal">
+      Ditetapkan di: Malang<br>
+      Pada Tanggal: 17 November 2026
     </div>
-    <div class="ttd-kanan">
-      <p class="ttd-text">Ditetapkan di: Malang<br>Pada Tanggal: 17 November 2026<br><br><strong>PT Media Tulisan Manusia</strong></p>
-      <img src="ttdlomba.png" alt="Tanda Tangan CEO" class="ttd-img">
-      <p class="ttd-text"><strong><u>Ach. Sufyan Wahyudi, S.Pd., M.Pd., C.Ed</u></strong><br>Chief Executive Officer</p>
+    <div class="ttd-box">
+      <div class="ttd-kolom">
+        <p class="ttd-jabatan">
+          <strong>Panitia Lomba Menulis Novela</strong>
+          <span>Ketua Pelaksana,</span>
+        </p>
+        <img src="ttdlomba.png" alt="Tanda Tangan Ketua Pelaksana" class="ttd-img">
+        <p class="ttd-nama">
+          <strong><u>Nurul Khodaifi, M.M</u></strong><br>
+          <span>&nbsp;</span>
+        </p>
+      </div>
+      <div class="ttd-kolom">
+        <p class="ttd-jabatan">
+          <strong>PT Media Tulisan Manusia</strong>
+          <span>Mengetahui / Menyetujui,</span>
+        </p>
+        <img src="ttdlomba.png" alt="Tanda Tangan CEO" class="ttd-img">
+        <p class="ttd-nama">
+          <strong><u>Ach. Sufyan Wahyudi, S.Pd., M.Pd., C.Ed</u></strong><br>
+          <span>Chief Executive Officer</span>
+        </p>
+      </div>
     </div>
   </div>
 
