@@ -4,153 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verifikasi Sertifikat - Media Tulisan Manusia</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            800: '#1a365d',
+                            900: '#0f294a', // Custom navy matching the certificate edge
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        /* Subtle entrance animation */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .container {
-            background-color: #ffffff;
-            width: 100%;
-            max-width: 400px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
-            margin: 20px;
+        @keyframes scaleIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
-        .header {
-            background-color: #10375C; /* Warna biru gelap sesuai tema sidebar sertifikat */
-            color: #ffffff;
-            text-align: center;
-            padding: 30px 20px;
-            border-bottom: 5px solid #2ecc71; /* Garis hijau penanda valid */
-            border-bottom-left-radius: 15px; /* Mengikuti gaya soft-curved */
-            border-bottom-right-radius: 15px;
+        .animate-fade-up {
+            animation: fadeUp 0.6s ease-out forwards;
         }
-        .logo {
-            width: 90px;
-            height: auto;
-            margin-bottom: 15px;
-            object-fit: contain;
-        }
-        .status-icon {
-            font-size: 45px;
-            color: #2ecc71;
-            margin-bottom: 5px;
-            line-height: 1;
-        }
-        .status-text {
-            font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            margin-top: 5px;
-        }
-        .content {
-            padding: 25px 25px 10px 25px;
-        }
-        .data-group {
-            margin-bottom: 18px;
-            border-bottom: 1px dashed #e0e0e0;
-            padding-bottom: 12px;
-        }
-        .data-group:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-        .label {
-            font-size: 0.8rem;
-            color: #7f8c8d;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
-        }
-        .value {
-            font-size: 1.05rem;
-            color: #2c3e50;
-            font-weight: 700;
-        }
-        .footer {
-            padding: 20px 25px 30px 25px;
-            text-align: center;
-            background-color: #ffffff;
-        }
-        .btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #10375C;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 14px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            box-shadow: 0 4px 6px rgba(16, 55, 92, 0.2);
-            gap: 10px;
-        }
-        .btn:hover {
-            background-color: #1a4f85;
-        }
-        .btn svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
+        .animate-scale-in {
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
     </style>
 </head>
-<body>
+<body class="bg-navy-900 min-h-screen flex items-center justify-center p-4 antialiased selection:bg-blue-200">
 
-<div class="container">
-    <div class="header">
-        <!-- Logo dipanggil dari logopt.webp -->
-        <img src="logopt.webp" alt="Logo Media Tulisan Manusia" class="logo" onerror="this.style.display='none'">
-        <div class="status-icon">✓</div>
-        <div class="status-text">SERTIFIKAT VALID</div>
-        <div style="font-size: 0.85rem; font-weight: normal; margin-top: 5px; opacity: 0.9;">Telah diverifikasi oleh sistem</div>
-    </div>
+    <!-- Card Container -->
+    <main class="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden animate-fade-up">
+        
+        <!-- Header -->
+        <div class="bg-navy-800 text-white text-center py-5 px-6">
+            <div class="flex justify-center mb-3">
+                <!-- Logo MTM memanggil logo1.png -->
+                <img src="logo1.png" alt="Logo Media Tulisan Manusia" class="h-14 w-auto object-contain drop-shadow-md" onerror="this.style.display='none'">
+            </div>
+            <h1 class="text-lg font-bold uppercase tracking-wider">Media Tulisan Manusia</h1>
+            <p class="text-blue-200 text-xs font-medium tracking-widest mt-1">KARYA NYATA HAK CIPTA TERJAGA</p>
+        </div>
 
-    <div class="content">
-        <div class="data-group">
-            <div class="label">Nomor Sertifikat</div>
-            <div class="value">001/SP-LN/MTM/XI/2026</div>
+        <!-- Validation Status -->
+        <div class="bg-green-50 border-b border-green-100 py-6 px-6 flex flex-col items-center justify-center text-center">
+            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-green-200/50 mb-3 animate-scale-in">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h2 class="text-xl font-bold text-green-700">SERTIFIKAT VALID & RESMI</h2>
+            <p class="text-sm text-green-600 mt-1">Dokumen ini sah dan terdaftar di database kami.</p>
         </div>
-        <div class="data-group">
-            <div class="label">Diberikan Kepada</div>
-            <div class="value">Nikita Jasmine Almira</div>
-        </div>
-        <div class="data-group">
-            <div class="label">Peran / Predikat</div>
-            <div class="value">Juri Utama</div>
-        </div>
-        <div class="data-group">
-            <div class="label">Nama Kegiatan</div>
-            <div class="value">Lomba Novela 2026</div>
-        </div>
-        <div class="data-group">
-            <div class="label">Penyelenggara</div>
-            <div class="value">Media Tulisan Manusia</div>
-        </div>
-        <div class="data-group">
-            <div class="label">Tanggal Terbit</div>
-            <div class="value">20 November 2026</div>
-        </div>
-    </div>
 
-    <div class="footer">
-        <!-- Link mengarah langsung ke 001.pdf -->
-        <a href="001.pdf" class="btn" target="_blank">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"/></svg>
-            Lihat File PDF Asli
-        </a>
-    </div>
-</div>
+        <!-- Certificate Details -->
+        <div class="px-6 py-6 space-y-4">
+            
+            <!-- No Sertifikat -->
+            <div>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Nomor Sertifikat</p>
+                <p class="text-sm font-mono font-bold text-gray-800 bg-gray-100 p-2 rounded mt-1 border border-gray-200">001/SP-LN/MTM/XI/2026</p>
+            </div>
+
+            <!-- Diberikan Kepada -->
+            <div>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Diberikan Kepada</p>
+                <p class="text-xl font-bold text-navy-900 mt-1">Nikita Jasmine Almira</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <!-- Sebagai -->
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Sebagai</p>
+                    <span class="inline-block mt-1 text-sm font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+                        Juri Utama
+                    </span>
+                </div>
+
+                <!-- Kegiatan -->
+                <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Kegiatan</p>
+                    <p class="text-sm font-medium text-gray-800 mt-1">"Lomba Novela 2026"</p>
+                </div>
+            </div>
+
+            <hr class="border-gray-100 my-2">
+
+            <!-- Tanggal Terbit -->
+            <div>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Tanggal Terbit</p>
+                <p class="text-sm font-medium text-gray-800 mt-1">Malang, 20 November 2026</p>
+            </div>
+
+            <!-- Disahkan Oleh -->
+            <div>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Disahkan Oleh</p>
+                <div class="space-y-2">
+                    <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                        <p class="text-sm font-bold text-gray-800">Nurul Khodaifi, M.M</p>
+                        <p class="text-xs text-gray-500">Ketua Penyelenggara</p>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                        <p class="text-sm font-bold text-gray-800">Ach. Sufyan Wahyudi, M.Pd</p>
+                        <p class="text-xs text-gray-500">Chief Executive Officer</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Action Button -->
+        <div class="px-6 pb-6 pt-2">
+            <!-- Link to PDF -->
+            <a href="001.pdf" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 bg-navy-800 hover:bg-navy-900 text-white font-semibold py-3.5 px-4 rounded-xl shadow-md transition-all active:scale-95">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Lihat File PDF
+            </a>
+        </div>
+        
+    </main>
 
 </body>
 </html>
